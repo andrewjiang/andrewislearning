@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Day 1 — Training AI to be my video editor · andrewislearning</title>
-<meta name="description" content="Day 1 of training AI to be my video editor. The whole video — script, edit, captions, publish — was made by AI. Free guide + Claude plugin to build your own.">
+<meta name="description" content="The whole video — script, edit, captions, publish — was made by AI. Free Claude plugin to plan your own daily series.">
 <meta property="og:title" content="Day 1 — Training AI to be my video editor">
-<meta property="og:description" content="The whole video was written, edited, captioned, and published by AI. Free guide + Claude plugin.">
+<meta property="og:description" content="The whole video was written, edited, captioned, and published by AI. Free Claude plugin.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://andrewislearning.com/days/01">
 <meta property="og:image" content="https://andrewislearning.com/cdn/day_01/cover.jpg">
@@ -20,6 +20,7 @@
     --soft: #f4f4f4;
     --soft-2: #faf9f7;
     --accent: #FFA395;
+    --accent-bg: #fff5f0;
     --accent-deep: #8a3520;
     --code-bg: #0a0a0a;
     --code-ink: #f4ead5;
@@ -31,10 +32,10 @@
     color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
+    line-height: 1.55;
   }
   header {
-    padding: 24px 32px;
+    padding: 22px 28px;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -46,9 +47,9 @@
   .back:hover { color: var(--ink); }
 
   main {
-    max-width: 720px;
+    max-width: 680px;
     margin: 0 auto;
-    padding: 56px 28px 120px;
+    padding: 48px 24px 96px;
   }
   .day-tag {
     font-size: 12px;
@@ -58,36 +59,72 @@
     margin: 0 0 12px;
   }
   h1 {
-    font-size: clamp(28px, 5vw, 42px);
+    font-size: clamp(28px, 5vw, 40px);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
     margin: 0 0 16px;
   }
+  .hook {
+    font-size: clamp(20px, 3.6vw, 26px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
   .lead {
-    font-size: 17px;
+    font-size: 16px;
     color: var(--muted);
-    margin: 0 0 28px;
-    max-width: 580px;
+    margin: 0 0 24px;
+    max-width: 540px;
   }
   .meta-flex {
     display: inline-block;
-    background: #fff5f0;
+    background: var(--accent-bg);
     border: 1px solid var(--accent);
     color: var(--accent-deep);
-    padding: 6px 12px;
+    padding: 5px 12px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.02em;
-    margin: 0 0 28px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 24px;
+  }
+
+  /* TL;DR callout — the most important block on the page */
+  .tldr {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 24px 26px;
+    margin: 0 0 40px;
+  }
+  .tldr h2 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: var(--accent-deep);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .tldr p {
+    margin: 0 0 16px;
+    color: #2a2a2a;
+    font-size: 15px;
+  }
+  .tldr p:last-child { margin-bottom: 0; }
+  .tldr .install {
+    margin-top: 12px;
+    margin-bottom: 0;
   }
 
   .video-wrap {
     aspect-ratio: 9 / 16;
     max-height: 720px;
     max-width: 405px;
-    margin: 0 auto 56px;
+    margin: 8px auto 56px;
     background: #000;
     border-radius: 14px;
     overflow: hidden;
@@ -96,111 +133,119 @@
   .video-wrap video { width: 100%; height: 100%; display: block; object-fit: cover; }
 
   h2 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.01em;
-    margin: 64px 0 14px;
+    margin: 56px 0 12px;
   }
-  h3 {
-    font-size: 17px;
-    font-weight: 600;
-    margin: 28px 0 8px;
-    color: var(--ink);
-  }
-  p { margin: 0 0 14px; }
-  p, li { color: #2a2a2a; }
-  ul, ol { margin: 0 0 16px; padding-left: 22px; }
-  li { margin-bottom: 6px; }
+  h2:first-of-type { margin-top: 0; }
+  p { margin: 0 0 14px; color: #2a2a2a; }
   code {
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-    font-size: 0.92em;
+    font-size: 0.9em;
     background: var(--soft);
     padding: 1px 6px;
     border-radius: 3px;
   }
-  em { font-style: italic; }
-  strong { font-weight: 600; }
-
-  /* Script callout — visually distinct, looks like a teleprompter */
-  .script {
-    background: var(--soft-2);
-    border-left: 3px solid var(--accent);
-    border-radius: 4px;
-    padding: 22px 26px;
-    margin: 16px 0 28px;
-    font-size: 15px;
-    line-height: 1.7;
-  }
-  .script p { margin: 0 0 14px; }
-  .script p:last-child { margin-bottom: 0; }
-  .script .stage-cue {
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--softer);
-    font-weight: 600;
-    margin: 18px 0 6px;
-    display: block;
-  }
-  .script .stage-cue:first-child { margin-top: 0; }
-  .script em { color: var(--muted); font-style: normal; }
 
   .install {
     background: var(--code-bg);
     color: var(--code-ink);
     border-radius: 10px;
-    padding: 18px 20px;
+    padding: 16px 20px;
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
     font-size: 13px;
     line-height: 1.7;
     overflow-x: auto;
     position: relative;
-    margin: 12px 0 20px;
   }
   .install .line { white-space: nowrap; }
   .install .prompt { color: #6e6a66; }
   .copy-btn {
     position: absolute;
-    top: 12px; right: 12px;
+    top: 10px; right: 10px;
     background: #2a2a2a;
     color: #ddd;
     border: 1px solid #3a3a3a;
     border-radius: 6px;
-    padding: 5px 10px;
+    padding: 4px 10px;
     font-size: 11px;
     cursor: pointer;
     font-family: inherit;
   }
   .copy-btn:hover { background: #3a3a3a; }
 
-  /* Pipeline stages — numbered cards */
-  .stage {
-    margin: 28px 0;
-    padding-left: 56px;
-    position: relative;
+  /* Process ribbon — visual flow of the 6 stages */
+  .ribbon {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 16px 0 0;
   }
-  .stage-num {
-    position: absolute;
-    left: 0; top: 0;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
+  @media (min-width: 600px) {
+    .ribbon { grid-template-columns: repeat(3, 1fr); }
+  }
+  .ribbon-step {
+    background: var(--soft-2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #ececec;
+  }
+  .ribbon-step .num {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    font-size: 11px;
     font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
+    color: var(--accent-deep);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
   }
-  .stage h3 { margin-top: 0; }
-  .stage h3 code { background: transparent; color: var(--accent-deep); padding: 0; font-size: 0.92em; }
+  .ribbon-step .name {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .ribbon-step .desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  /* Script callout */
+  details.script {
+    background: var(--soft-2);
+    border: 1px solid #ececec;
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 14px 22px;
+    margin: 12px 0 0;
+  }
+  details.script summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 14px;
+    list-style: none;
+    padding: 4px 0;
+  }
+  details.script summary::-webkit-details-marker { display: none; }
+  details.script summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 8px;
+    color: var(--accent-deep);
+    transition: transform 120ms;
+  }
+  details.script[open] summary::before { transform: rotate(90deg); }
+  details.script .body { padding: 12px 0 4px; font-size: 14px; line-height: 1.7; }
+  details.script .body p { margin: 0 0 12px; }
+  details.script .body p:last-child { margin-bottom: 0; }
+  details.script .body em { color: var(--softer); font-style: normal; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 14px; margin-bottom: 2px; }
 
   .links {
-    margin-top: 32px;
+    margin-top: 20px;
     font-size: 14px;
     display: flex;
-    gap: 18px;
+    gap: 16px;
     flex-wrap: wrap;
   }
   .links a {
@@ -210,29 +255,20 @@
   }
   .links a:hover { border-bottom-color: var(--accent); }
 
-  .callout {
-    background: var(--soft);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin: 24px 0;
-  }
-  .callout h3 { margin-top: 0; color: var(--muted); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
-  .callout p { margin: 6px 0 0; }
-
   .next-up {
     background: var(--soft);
     border-radius: 10px;
-    padding: 20px 24px;
+    padding: 18px 22px;
     margin: 56px 0 0;
   }
-  .next-up h3 { margin-top: 0; color: var(--softer); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
-  .next-up p { margin: 6px 0 0; font-size: 15px; }
+  .next-up h3 { margin: 0; color: var(--softer); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; }
+  .next-up p { margin: 6px 0 0; font-size: 14px; }
 
   footer {
     text-align: center;
     font-size: 12px;
     color: #aaa;
-    padding: 32px;
+    padding: 28px;
     border-top: 1px solid #eee;
   }
   footer a { color: inherit; }
@@ -249,11 +285,20 @@
   <p class="day-tag">Day 01 · April 29, 2026</p>
   <h1>Training AI to be my video editor</h1>
   <span class="meta-flex">written · edited · captioned · published — by AI</span>
+  <p class="hook">"I got outplayed on my own video."</p>
   <p class="lead">
-    A random account reposted my video on Instagram and got more comments than my original got likes.
-    So I'm spending 30 days teaching an AI to do the work for me. Day 1 is the planning episode —
-    and the plugin you can install to do this for your own series.
+    My video on X got nearly a million views. Someone reposted it to Instagram, gave away my demo link, and got more comments than my original got likes. So instead of becoming a better editor, I'm spending 30 days teaching an AI to be one for me.
   </p>
+
+  <div class="tldr">
+    <h2>You don't need to read this</h2>
+    <p>If you have <a href="https://claude.com/code">Claude Code</a>, two commands give you the same plugin I used to plan this series. Tell Claude what your show is about; it does the rest.</p>
+    <div class="install">
+      <button class="copy-btn" onclick="copyInstall(this)">copy</button>
+      <div class="line"><span class="prompt">$ </span>/plugin marketplace add andrewjiang/andrewislearning</div>
+      <div class="line"><span class="prompt">$ </span>/plugin install day-01-series-planner@andrewislearning</div>
+    </div>
+  </div>
 
   <div class="video-wrap">
     <video controls playsinline preload="metadata" poster="/cdn/day_01/cover.jpg">
@@ -262,201 +307,75 @@
     </video>
   </div>
 
-  <h2>Get the Day 1 plugin</h2>
-  <p>Two lines into Claude Code (free at <a href="https://claude.com/code">claude.com/code</a>):</p>
-  <div class="install">
-    <button class="copy-btn" onclick="copyInstall(this)">copy</button>
-    <div class="line"><span class="prompt">$ </span>/plugin marketplace add andrewjiang/andrewislearning</div>
-    <div class="line"><span class="prompt">$ </span>/plugin install day-01-series-planner@andrewislearning</div>
-  </div>
-  <p>
-    Then ask Claude: <em>"Help me plan a 30-day series about [your topic]."</em>
-    The skill walks you through five short questions and writes <code>SERIES_PLAN.md</code>,
-    <code>DAY_01_SCRIPT.md</code>, and <code>TOOLS.md</code> straight into your project folder.
-    Same questions I answered to plan this series.
-  </p>
-
-  <h2>What this is, in plain English</h2>
-  <p>
-    I'm a founder, not a video editor. I shoot vertical selfies on my phone like everyone else.
-    The problem is what comes after — cutting the boring parts, fixing audio, adding captions,
-    posting to two platforms, sending DMs to people who comment. That's where most creators
-    spend their evenings, and it's exactly the kind of work AI is good at.
-  </p>
-  <p>
-    So I'm running a 30-day public experiment: teach an AI to do every step except the recording
-    itself. By Day 30, I post a video and the only thing I do is hold the phone.
-    Each day I add one piece. Each day's piece becomes a <strong>plugin you can install</strong> —
-    so by the end, you'll have the same toolkit I do.
-  </p>
-
-  <h2>The script (what I actually said in the video)</h2>
-  <p>
-    The whole spoken script for Day 1 is below. About 50 seconds, 142 words. Read it like a
-    teleprompter — that's exactly how I read it on camera.
-  </p>
-  <div class="script">
-    <span class="stage-cue">[Selfie]</span>
-    <p>Day 1 of training AI to be my video editor.</p>
-    <p>My video on X got nearly a million views.</p>
-    <span class="stage-cue">[B-roll: the IG repost]</span>
-    <p>Someone reposted it to Instagram, gave away my demo link, and got nearly two thousand comments.</p>
-    <span class="stage-cue">[Selfie]</span>
-    <p>I got outplayed on my own work.</p>
-    <p>But it got me to think — I can do that. I'm not gonna become an editor. I can teach an AI to be one for me.</p>
-    <p>So here's the challenge: 30 days. Every edit through an AI agent. Every post through an AI agent. Just my phone and a laptop.</p>
-    <span class="stage-cue">[B-roll: Claude planning the series]</span>
-    <p>Step one wasn't even recording. It was opening Claude. I asked it to plan the whole 30 days, beginning to end.</p>
-    <span class="stage-cue">[B-roll: writing / editing / publishing]</span>
-    <p><em>Write. Edit. Publish. Every day.</em></p>
-    <span class="stage-cue">[Selfie]</span>
-    <p>I'm packaging everything into a free guide and a Claude plugin. Follow and comment <strong>'DAY 1'</strong> for the link.</p>
+  <h2>How the video was made</h2>
+  <p>Six small Python scripts ran in sequence. Each one does ONE thing. All open-source.</p>
+  <div class="ribbon">
+    <div class="ribbon-step">
+      <div class="num">01</div>
+      <div class="name">Transcribe</div>
+      <div class="desc">Whisper turns the audio into word-by-word timestamps.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">02</div>
+      <div class="name">Tighten</div>
+      <div class="desc">Cuts dead air, long pauses, retakes. JSON config, ffmpeg executes.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">03</div>
+      <div class="name">Assemble</div>
+      <div class="desc">Selfie audio is the spine. B-roll clips swap in for the visual at scripted moments.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">04</div>
+      <div class="name">Caption</div>
+      <div class="desc">Word timestamps → ASS subtitles → burned in. Multi-word phrases stay atomic.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">05</div>
+      <div class="name">Polish</div>
+      <div class="desc">Audio normalize to −14 LUFS, light color grade, 1.08× pace. One ffmpeg pass.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">06</div>
+      <div class="name">Publish</div>
+      <div class="desc">One API call → IG Reel + TikTok in 30 seconds. No manual upload.</div>
+    </div>
   </div>
 
-  <h2>How AI made this — step by step</h2>
-  <p>
-    Six small Python scripts ran one after the other. Each one is open-source. Each one does a
-    single thing well. None of them is more than ~150 lines of code. You don't need to understand
-    Python to use them — Claude wrote them, and Claude can run them for you too. But here's what
-    each one actually did for this video.
-  </p>
+  <h2>The script</h2>
+  <p>About 50 seconds, 142 words. Same script the plugin will help you write.</p>
+  <details class="script">
+    <summary>Read the full spoken script</summary>
+    <div class="body">
+      <em>Selfie</em>
+      <p>Day 1 of training AI to be my video editor.</p>
+      <p>My video on X got nearly a million views.</p>
+      <em>B-roll: the IG repost</em>
+      <p>Someone reposted it to Instagram, gave away my demo link, and got nearly two thousand comments.</p>
+      <em>Selfie</em>
+      <p>I got outplayed on my own work. But it got me to think — I can do that. I'm not gonna become an editor. I can teach an AI to be one for me.</p>
+      <p>So here's the challenge: 30 days. Every edit through an AI agent. Every post through an AI agent. Just my phone and a laptop.</p>
+      <em>B-roll: Claude planning the series</em>
+      <p>Step one wasn't even recording. It was opening Claude. I asked it to plan the whole 30 days, beginning to end.</p>
+      <em>B-roll: writing / editing / publishing</em>
+      <p>Write. Edit. Publish. Every day.</p>
+      <em>Selfie</em>
+      <p>I'm packaging everything into a free guide and a Claude plugin. Follow and comment <strong>'DAY 1'</strong> for the link.</p>
+    </div>
+  </details>
 
-  <div class="stage">
-    <div class="stage-num">1</div>
-    <h3><code>transcribe.py</code> — turning audio into words</h3>
-    <p>
-      Whisper (the open-source AI speech-to-text model from OpenAI) listened to my selfie footage
-      and gave me back a JSON file with every word I said and the exact millisecond it started and
-      ended. Word-level timestamps are the foundation for everything else — captions, cuts, sync.
-    </p>
-    <p>
-      <strong>Beginner shortcut:</strong> Whisper is free and runs locally. The first time you use
-      it, it downloads a ~250 MB model and you never need to touch it again. After that, transcribing
-      a 50-second clip takes about 10 seconds on a regular laptop.
-    </p>
-  </div>
-
-  <div class="stage">
-    <div class="stage-num">2</div>
-    <h3><code>tighten.py</code> — cutting the boring parts</h3>
-    <p>
-      I watched my own footage once and noted the timestamps of dead air, long pauses, and beats
-      that felt redundant. Then I told <code>tighten.py</code> to "keep only these windows of the
-      video" via a small JSON config. ffmpeg actually performed the cuts.
-    </p>
-    <p>
-      Result: a 67-second raw take became a 60-second tight take. The thing that's special is the
-      cuts are described in JSON, not made by clicking around a timeline. You can re-do them by
-      editing the file. No clicking, no scrubbing.
-    </p>
-  </div>
-
-  <div class="stage">
-    <div class="stage-num">3</div>
-    <h3><code>assemble.py</code> — layering b-roll over the audio</h3>
-    <p>
-      The selfie audio is the spine of the video — your voice plays uninterrupted from start to
-      finish. <code>assemble.py</code> swaps out the <em>visual</em> at scripted moments while the
-      audio keeps going. That's why you see the IG repost screenshot, my Cowork screen, and the
-      writing/editing/publishing scenes — they replace the visual but my voice stays continuous.
-    </p>
-    <p>
-      <strong>The trick:</strong> a JSON config says "at second 8, swap the visual to broll_take_01.mp4
-      for 6 seconds." ffmpeg does the swap. You can re-arrange b-roll just by editing numbers in
-      the JSON.
-    </p>
-  </div>
-
-  <div class="stage">
-    <div class="stage-num">4</div>
-    <h3><code>caption.py</code> — burning captions onto the video</h3>
-    <p>
-      Using the word-level timestamps from step 1, this script groups my words into 1–3-word chunks
-      ("AI agent" stays together, "Claude plugin" stays together) and generates an ASS subtitle
-      file — that's an advanced subtitle format that supports per-word styling. Then ffmpeg burns
-      the captions directly into the video pixels, so they show up the same on every platform
-      regardless of caption settings.
-    </p>
-    <p>
-      The salmon-coral words are emphasis (DAY 1, AI AGENT, FREE GUIDE, CLAUDE PLUGIN). The white
-      words are everything else. Position is at the lower third — out of the way of my face but
-      above Instagram's UI overlays.
-    </p>
-  </div>
-
-  <div class="stage">
-    <div class="stage-num">5</div>
-    <h3><code>finish.py</code> — audio polish, color, and pacing</h3>
-    <p>One ffmpeg pass that does three things at once:</p>
-    <ul>
-      <li><strong>Audio:</strong> high-pass filter (kills room rumble), gentle noise reduction
-      (cleans hiss), light compression (evens out my volume), and loudness normalization to
-      <strong>-14 LUFS</strong> — that's the loudness target Instagram and TikTok use, so my audio
-      plays at the same volume as everyone else's. Without this, platforms re-mix your audio at
-      upload and quality degrades.</li>
-      <li><strong>Color:</strong> a tiny bump in contrast and saturation. Not heavy "Instagram filter"
-      territory — just enough to make the colors feel intentional.</li>
-      <li><strong>Speed:</strong> 1.08× playback. Just enough to feel snappy without sounding
-      sped-up.</li>
-    </ul>
-  </div>
-
-  <div class="stage">
-    <div class="stage-num">6</div>
-    <h3><code>publish.py</code> — posting to Instagram and TikTok at once</h3>
-    <p>
-      A single API call to <a href="https://www.postforme.dev">Post for Me</a> that uploads the
-      video and publishes it to my Instagram Reel and TikTok account simultaneously. ~30 seconds
-      from local file to live post on both platforms.
-    </p>
-    <p>
-      No "save to camera roll, switch to IG app, swipe up, paste caption, scroll to find a cover
-      frame, repeat for TikTok." That whole 5-minute manual flow is one curl request now.
-    </p>
-  </div>
-
-  <h2>If you've never written code before</h2>
-  <p>
-    Here's how to think about this without getting overwhelmed:
-  </p>
-  <ol>
-    <li><strong>Each step is a small tool.</strong> Each one does ONE thing. You can run them one
-    at a time, in order.</li>
-    <li><strong>The tools chain together.</strong> The output of step 1 becomes the input to step 2,
-    and so on. The whole pipeline is just files in folders.</li>
-    <li><strong>Claude wrote almost all of this.</strong> When you install the plugin, you can ask
-    Claude to plan, build, or fix any of these steps for your own video. You're not writing code —
-    you're directing.</li>
-    <li><strong>Start with the planning step.</strong> Install the plugin (one command), tell Claude
-    what your series is about, and let it build the plan. That's Day 1's deliverable. Days 2–30
-    add the rest.</li>
-  </ol>
-
-  <div class="callout">
-    <h3>Want to try it on your own series?</h3>
-    <p>
-      Run the install command at the top of this page, then ask Claude:
-      <em>"Help me plan a 30-day series about [your topic]."</em> The skill activates and walks you
-      through five questions. Even if you never go past Day 1, you'll have a solid plan to build on.
-    </p>
-  </div>
-
-  <h2>Get the source</h2>
-  <p>
-    Everything is open-source. Browse, fork, or run any of it locally:
-  </p>
+  <h2>The source</h2>
+  <p>Browse, fork, or run any of it locally:</p>
   <div class="links">
     <a href="https://github.com/andrewjiang/andrewislearning">github repo</a>
-    <a href="https://github.com/andrewjiang/andrewislearning/tree/main/plugins/day-01-series-planner">view plugin source</a>
+    <a href="https://github.com/andrewjiang/andrewislearning/tree/main/plugins/day-01-series-planner">plugin source</a>
     <a href="https://github.com/andrewjiang/andrewislearning/tree/main/pipeline">all 6 pipeline scripts</a>
-    <a href="https://github.com/andrewjiang/andrewislearning/blob/main/series/days/01-script.md">the full shot list</a>
     <a href="https://github.com/andrewjiang/andrewislearning/blob/main/series/SERIES_PLAN.md">the 30-day plan</a>
   </div>
 
   <div class="next-up">
     <h3>Tomorrow — Day 02</h3>
     <p>
-      Wiring up <code>transcribe.py</code> + <code>tighten.py</code> as a single command.
       The pipeline starts ingesting raw phone footage. Follow
       <a href="https://instagram.com/andrewislearning">@andrewislearning</a> for the next 29 days.
     </p>
