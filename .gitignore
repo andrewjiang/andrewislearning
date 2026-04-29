@@ -1,0 +1,33 @@
+# Big media — never commit (now in day_NN/ subfolders)
+raw/**/*.mp4
+raw/**/*.mov
+raw/**/*.MOV
+edits/**/*.mp4
+edits/**/*.mov
+published/**/*.mp4
+published/**/*.mov
+
+# Keep the folder skeleton so a fresh clone has the structure
+!**/.gitkeep
+
+# Transcripts are derivable; commit only intentionally
+transcripts/**/*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node / web build
+node_modules/
+web/dist/
+web/.cache/
+
+# OS
+.DS_Store
+
+# API keys / env
+.env
+.env.local
+.vercel

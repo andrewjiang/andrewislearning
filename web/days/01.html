@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 1 — Training AI to be my video editor · andrewislearning</title>
+<meta name="description" content="Day 1 of training AI to be my video editor. The whole video — script, edit, captions, publish — was made by AI. Free guide + Claude plugin to build your own.">
+<meta property="og:title" content="Day 1 — Training AI to be my video editor">
+<meta property="og:description" content="The whole video was written, edited, captioned, and published by AI. Free guide + Claude plugin.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://andrewislearning.com/days/01">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #ffffff;
+    --ink: #111111;
+    --muted: #666666;
+    --soft: #f4f4f4;
+    --accent: #FFA395;
+    --code-bg: #0a0a0a;
+    --code-ink: #f4ead5;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  header {
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid #eee;
+  }
+  .wordmark { font-size: 14px; }
+  .wordmark a { color: inherit; text-decoration: none; }
+  .back { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--ink); }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 28px 120px;
+  }
+  .day-tag {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 16px;
+  }
+  .summary {
+    font-size: 17px;
+    color: var(--muted);
+    margin: 0 0 36px;
+    max-width: 560px;
+  }
+  .meta-flex {
+    display: inline-block;
+    background: #fff5f0;
+    border: 1px solid var(--accent);
+    color: #8a3520;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin: 0 0 28px;
+  }
+
+  .video-wrap {
+    aspect-ratio: 9 / 16;
+    max-height: 720px;
+    max-width: 405px;
+    margin: 0 auto 48px;
+    background: #000;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  }
+  .video-wrap video { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 56px 0 12px;
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 24px 0 8px;
+    color: var(--ink);
+  }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 16px; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    font-size: 0.92em;
+    background: var(--soft);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .install {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    position: relative;
+    margin: 12px 0 20px;
+  }
+  .install .line { white-space: nowrap; }
+  .install .prompt { color: #6e6a66; }
+  .copy-btn {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: #2a2a2a;
+    color: #ddd;
+    border: 1px solid #3a3a3a;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .copy-btn:hover { background: #3a3a3a; }
+
+  .pipeline {
+    display: grid;
+    gap: 0;
+    margin: 24px 0 32px;
+    border-left: 2px solid var(--accent);
+    padding-left: 18px;
+  }
+  .stage {
+    margin-bottom: 18px;
+  }
+  .stage:last-child { margin-bottom: 0; }
+  .stage-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+  .stage-title code { background: transparent; color: #8a3520; padding: 0; font-size: 0.95em; }
+  .stage-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .links {
+    margin-top: 32px;
+    font-size: 14px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .links a {
+    color: #8a3520;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .links a:hover { border-bottom-color: var(--accent); }
+
+  .next-up {
+    background: var(--soft);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 40px 0 0;
+  }
+  .next-up h3 { margin-top: 0; color: var(--muted); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .next-up p { margin: 6px 0 0; font-size: 15px; }
+
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    padding: 32px;
+    border-top: 1px solid #eee;
+  }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark"><a href="/">@andrewislearning</a></div>
+  <a class="back" href="/">← all days</a>
+</header>
+
+<main>
+  <p class="day-tag">Day 01 · April 29, 2026</p>
+  <h1>Training AI to be my video editor</h1>
+  <span class="meta-flex">written · edited · captioned · published — by AI</span>
+  <p class="summary">
+    A random account reposted my video on Instagram and got more comments than my original got likes.
+    So I'm spending 30 days teaching an AI to do the work for me. Day 1 is the planning episode —
+    and the plugin you can install to do this for your own series.
+  </p>
+
+  <div class="video-wrap">
+    <video controls playsinline preload="metadata" poster="/cdn/day_01/cover.jpg">
+      <source src="/cdn/day_01/final.mp4" type="video/mp4">
+      Your browser doesn't support video. <a href="/cdn/day_01/final.mp4">Download the video</a>.
+    </video>
+  </div>
+
+  <h2>Install the Day 1 plugin</h2>
+  <p>Two lines into Claude Code (free at <a href="https://claude.com/code">claude.com/code</a>):</p>
+  <div class="install">
+    <button class="copy-btn" onclick="copyInstall(this)">copy</button>
+    <div class="line"><span class="prompt">$ </span>/plugin marketplace add andrewjiang/andrewislearning</div>
+    <div class="line"><span class="prompt">$ </span>/plugin install day-01-series-planner@andrewislearning</div>
+  </div>
+  <p>
+    Then ask Claude: <em>"Help me plan a 30-day series about [your topic]."</em>
+    The skill walks you through five questions and writes <code>SERIES_PLAN.md</code>,
+    <code>DAY_01_SCRIPT.md</code>, and <code>TOOLS.md</code> straight into your project folder.
+  </p>
+
+  <h2>How this video was made</h2>
+  <p>
+    The selfie was shot on a phone. Everything else — the cuts, the captions, the b-roll, the audio
+    polish, the publish — was done by code that calls AI agents. Six pipeline scripts running in
+    sequence, every one open-source.
+  </p>
+
+  <div class="pipeline">
+    <div class="stage">
+      <div class="stage-title"><code>transcribe.py</code> — Whisper</div>
+      <p class="stage-desc">Word-level timestamps from raw selfie footage. Local, no API.</p>
+    </div>
+    <div class="stage">
+      <div class="stage-title"><code>tighten.py</code> — keep-windows</div>
+      <p class="stage-desc">Cuts dead air and long pauses based on a JSON keep list. Removed 5+ seconds of "ums" and gaps.</p>
+    </div>
+    <div class="stage">
+      <div class="stage-title"><code>assemble.py</code> — b-roll inserter</div>
+      <p class="stage-desc">Selfie audio is the spine. Three b-roll clips replace the visual at scripted moments while audio continues.</p>
+    </div>
+    <div class="stage">
+      <div class="stage-title"><code>caption.py</code> — burned-in captions</div>
+      <p class="stage-desc">Reads the transcript, groups phrases (so "AI agent" stays atomic), generates ASS subtitles, ffmpeg burns them in.</p>
+    </div>
+    <div class="stage">
+      <div class="stage-title"><code>finish.py</code> — audio + color + speed</div>
+      <p class="stage-desc">Loudness normalize to -14 LUFS (IG/TikTok target), light color grade, 1.08× tempo. One ffmpeg pass.</p>
+    </div>
+    <div class="stage">
+      <div class="stage-title"><code>publish.py</code> — Post for Me API</div>
+      <p class="stage-desc">Uploads to Post for Me, publishes to Instagram Reels + TikTok in one API call. Receipt saved with permalinks.</p>
+    </div>
+  </div>
+
+  <h2>What the plugin actually does</h2>
+  <p>
+    The <code>series-planner</code> skill bottles the conversation that planned this very series.
+    It asks five questions:
+  </p>
+  <ul>
+    <li>What are you learning to do over 30 days, and what rules constrain it?</li>
+    <li>Where will it be published, and who's the target viewer?</li>
+    <li>What's the inciting incident — the specific story that made you start?</li>
+    <li>What one credential do you bring that serves the story?</li>
+    <li>What's the brand handle?</li>
+  </ul>
+  <p>
+    Then it builds a 4-week arc, drafts the Day 1 script, and writes the tool rollout. The Day 1
+    script template includes the structure that tested well in this series: format-opener, inciting
+    incident with specific numbers, ownership flip, rules, meta moment, card stack, comment-to-DM CTA.
+  </p>
+
+  <h2>Get the source</h2>
+  <div class="links">
+    <a href="https://github.com/andrewjiang/andrewislearning">github repo</a>
+    <a href="https://github.com/andrewjiang/andrewislearning/tree/main/plugins/day-01-series-planner">view plugin source</a>
+    <a href="https://github.com/andrewjiang/andrewislearning/tree/main/pipeline">pipeline scripts</a>
+    <a href="https://github.com/andrewjiang/andrewislearning/blob/main/series/days/01-script.md">the script we used</a>
+    <a href="https://github.com/andrewjiang/andrewislearning/blob/main/series/SERIES_PLAN.md">the 30-day plan</a>
+  </div>
+
+  <div class="next-up">
+    <h3>Tomorrow — Day 02</h3>
+    <p>
+      Wiring up <code>transcribe.py</code> + <code>tighten.py</code> as a single command.
+      The pipeline starts ingesting raw phone footage. Follow
+      <a href="https://instagram.com/andrewislearning">@andrewislearning</a> for the next 29 days.
+    </p>
+  </div>
+</main>
+
+<footer>
+  <a href="https://github.com/andrewjiang/andrewislearning">github</a> ·
+  <a href="https://instagram.com/andrewislearning">instagram</a> ·
+  <a href="https://tiktok.com/@andrewislearning">tiktok</a>
+</footer>
+
+<script>
+function copyInstall(btn) {
+  const text = "/plugin marketplace add andrewjiang/andrewislearning\n/plugin install day-01-series-planner@andrewislearning";
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "copied";
+    setTimeout(() => { btn.textContent = orig; }, 1400);
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "day-01-series-planner",
+  "version": "1.0.0",
+  "description": "Plan a 30-day daily content series — structured arc, daily recipes, and a Day 1 script. Day 1 of @andrewislearning's series on automating content creation with AI.",
+  "author": {
+    "name": "Andrew",
+    "url": "https://andrewislearning.com"
+  },
+  "homepage": "https://andrewislearning.com/days/01",
+  "license": "MIT",
+  "keywords": [
+    "content-creation",
+    "video-series",
+    "planning",
+    "andrewislearning",
+    "day-01"
+  ]
+}

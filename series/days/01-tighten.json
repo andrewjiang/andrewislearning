@@ -1,0 +1,16 @@
+{
+  "_comment": "Day 1 selfie tightening — pass 3. Restores 'But it got me to think, I can do that' (the inciting motivational turn) but cuts 'It's on me' (redundant with 'outplayed on my own work'). Final speedup: 1.08×.",
+  "input": "raw/day_01/selfie_combined.mp4",
+  "output": "raw/day_01/selfie_combined_tight.mp4",
+  "keep": [
+    {"start": 0.50,  "end": 4.76,  "label": "opener: 'So this is day one of training an AI to be my video editor.'"},
+    {"start": 5.20,  "end": 17.90, "label": "'My video on X… outplayed on my own work.'"},
+    {"start": 20.50, "end": 23.40, "label": "'But it got me to think, I can do that.' (the motivational turn — restored. 'It's on me' still cut as redundant)"},
+    {"start": 23.51, "end": 30.10, "label": "'I mean, I'm not going to become an editor… for me.'"},
+    {"start": 30.62, "end": 36.50, "label": "'So here's the challenge. 30 days, every edit…'"},
+    {"start": 36.65, "end": 39.50, "label": "'Every post is going to be made by an AI agent.'"},
+    {"start": 39.80, "end": 44.10, "label": "'And the only recording tools… my phone and my laptop.'"},
+    {"start": 45.01, "end": 58.18, "label": "Cowork + agentic b-roll content"},
+    {"start": 59.40, "end": 66.86, "label": "Outro: 'I'm packaging everything… DM you the link.'"}
+  ]
+}

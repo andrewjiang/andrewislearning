@@ -1,0 +1,19 @@
+{
+  "_comment": "Day 1 publish config. Reads $POSTFORME_API_KEY from env. Run from your Mac (not Cowork sandbox) with: python3 pipeline/publish.py series/days/01-publish.json",
+  "video": "edits/day_01/final.mp4",
+  "_caption_note": "v2 — adds the meta-flex (written/edited/captioned/published by AI) which is the strongest possible proof for the agentic-pipeline thesis. Hashtags pushed below the 'more' fold via dot-separator lines (IG strips empty lines, dots survive). Body 142 chars; visible preview cuts before the dots.",
+  "caption": "Day 1 of training AI to be my video editor. Written, edited, captioned, and published by AI. Follow + comment 'DAY 1' for the guide + plugin.\n.\n.\n.\n.\n#ClaudeAI #AIagents #ContentAutomation #BuildInPublic #AIWorkflow",
+  "platforms": ["instagram", "tiktok"],
+  "platform_configurations": {
+    "instagram": {
+      "share_to_feed": true
+    },
+    "tiktok": {
+      "privacy_level": "PUBLIC_TO_EVERYONE",
+      "disable_duet": false,
+      "disable_stitch": false,
+      "disable_comment": false
+    }
+  },
+  "output": "published/day_01/receipt.json"
+}

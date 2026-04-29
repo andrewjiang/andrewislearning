@@ -1,0 +1,63 @@
+{
+  "_comment": "Day 1 captions config. Reads transcripts (in original take time), applies the same tighten transforms as 01-tighten.json, generates ASS subtitles in our cream/orange palette, burns them into final_unsped.mp4. Speedup is applied AFTER captioning so they speed up naturally with the audio.",
+  "input": "edits/day_01/final_unsped.mp4",
+  "output": "edits/day_01/final_captioned.mp4",
+  "tighten_config": "series/days/01-tighten.json",
+  "transcripts": [
+    {
+      "path": "transcripts/day_01/selfie_part_a.json",
+      "combined_offset": 0.0,
+      "leading_trim": 0.0,
+      "max_original": 44.5
+    },
+    {
+      "path": "transcripts/day_01/selfie_part_b.json",
+      "combined_offset": 44.5,
+      "leading_trim": 0.5
+    }
+  ],
+  "_emphasis_note": "Multi-word phrases auto-stay-together as chunks (AI agent, 30 days, every day, free guide, Claude plugin, day one→'DAY 1'). 'AI' alone removed so it pairs with 'agent'.",
+  "emphasis_words": [
+    "million", "2,000", "2000", "comments",
+    "outplayed", "challenge",
+    "30 days", "AI agent",
+    "Claude", "day one",
+    "free guide", "Claude plugin",
+    "write", "edit", "publish", "every day"
+  ],
+  "_group_phrases_note": "Phrases that should stay together as one chunk but NOT get the emphasis color. Force chunking only.",
+  "group_phrases": [
+    "follow and comment",
+    "I'll DM you"
+  ],
+  "max_words_per_chunk": 3,
+  "min_chunk_duration": 0.40,
+  "style": {
+    "font": "Liberation Sans Bold",
+    "_font_note": "drop fonts/main-bold.ttf at repo root to override (Inter, Montserrat, Plus Jakarta Sans recommended)",
+    "size": 96,
+    "emphasis_size_multiplier": 1.15,
+    "_size_note": "default 96pt; emphasis 96 × 1.15 = ~110pt. Bigger emphasis text draws the eye without color alone.",
+    "color": "FFFFFF",
+    "_color_note": "pure white — research consensus for default short-form captions",
+    "emphasis_color": "FFA395",
+    "_emphasis_note": "Lighter salmon (was FF8C7A). RGB(255, 163, 149) — added 20% white to each channel. Softer pastel coral, still pink-leaning, less saturated. Easier on the eye for bigger text.",
+    "outline_color": "0A0A0A",
+    "back_color": "0A0A0A",
+    "border_style": 3,
+    "_border_note": "3 = opaque pill behind text; 1 = outline only",
+    "box_alpha": "26",
+    "_alpha_note": "0x26 ≈ 85% opaque pill (slightly more solid than before for max contrast)",
+    "outline": 7,
+    "shadow": 0,
+    "y_position": 0.73,
+    "_position_note": "73% from top — clears IG UI safe zone (bottom ~14% should stay clear for platform overlays). Bumped up from 78%.",
+    "text_replacements": {
+      "DAY ONE": "DAY 1",
+      "RECORDED": "RECORDING"
+    },
+    "_replacements_note": "render-time text swaps. 'day one' is what whisper transcribed; 'DAY 1' is what we want viewers to see (matches the CTA keyword)."
+  },
+  "width": 1080,
+  "height": 1920
+}

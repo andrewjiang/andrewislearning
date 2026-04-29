@@ -1,0 +1,21 @@
+{
+  "name": "andrewislearning",
+  "owner": {
+    "name": "Andrew",
+    "url": "https://andrewislearning.com"
+  },
+  "metadata": {
+    "description": "30 days of automating content creation with AI. One plugin per day.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "day-01-series-planner",
+      "source": "./plugins/day-01-series-planner",
+      "description": "Plan a daily content series with Claude — arc, recipes, and a Day 1 script.",
+      "version": "1.0.0",
+      "category": "content",
+      "tags": ["day-01", "planning", "video-series", "ai-content"]
+    }
+  ]
+}

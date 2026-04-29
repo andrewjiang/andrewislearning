@@ -1,0 +1,28 @@
+{
+  "_comment": "Day 1 assembly. Base = selfie_combined_tight.mp4 (~60.1s post-tighten-pass-3). After assembly, 1.08× speedup applied.",
+  "base": "raw/day_01/selfie_combined_tight.mp4",
+  "inserts": [
+    {
+      "_comment": "IG repost: 'Someone reposted… 2,000 comments'. Cumulative kept before window 2 = 4.26. 'Someone' word at 8.61 in original, offset within window 2 = 8.61-5.20 = 3.41. Tightened position = 4.26 + 3.41 = 7.67",
+      "at": 7.67,
+      "duration": 5.7,
+      "video": "raw/day_01/broll_take_01.mp4"
+    },
+    {
+      "_comment": "Cowork screen: 'Step one wasn't even recorded… plan the whole 30 days'. Cumulative kept before window 8 = 4.26 + 12.70 + 2.90 + 6.59 + 5.88 + 2.85 + 4.30 = 39.48",
+      "at": 39.48,
+      "duration": 6.7,
+      "video": "edits/day_01/screen_clip.mp4"
+    },
+    {
+      "_comment": "Agentic b-roll: 6.42s · 3 cuts (writing/editing/publishing). Starts 6.7s into window 8 = 39.48 + 6.7 = 46.18",
+      "at": 46.18,
+      "duration": 6.42,
+      "video": "edits/day_01/agentic_broll.mp4"
+    }
+  ],
+  "output": "edits/day_01/final_unsped.mp4",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30
+}

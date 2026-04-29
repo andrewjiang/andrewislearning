@@ -1,0 +1,27 @@
+# Local dev artifacts — kept on disk for inspection but never deployed
+web/assets/
+
+# OS junk
+**/.DS_Store
+
+# Editor swap files
+**/*.swp
+**/*.swo
+
+# Internal pipeline state — these aren't under web/ but reinforced here
+raw/
+edits/
+transcripts/
+published/
+pipeline/
+plugins/
+series/
+.venv-whisper/
+__pycache__/
+*.pyc
+
+# Notes / docs that shouldn't ship to the public site
+README.md
+CONVENTIONS.md
+.gitignore
+.git/
