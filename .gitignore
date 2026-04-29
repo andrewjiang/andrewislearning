@@ -31,3 +31,6 @@ web/.cache/
 .env
 .env.local
 .vercel
+
+# Debug iteration artifacts (frame samples, audio extractions)
+web/assets/
