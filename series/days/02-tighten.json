@@ -1,0 +1,46 @@
+{
+  "input": "raw/day_02/selfie_spine_raw.mp4",
+  "output": "raw/day_02/selfie_spine_tight.mp4",
+  "keep": [
+    {
+      "start": 0.0,
+      "end": 5.45,
+      "label": "shot_1_day_2_reveal"
+    },
+    {
+      "start": 6.1,
+      "end": 16.15,
+      "label": "shot_2_recap_proof"
+    },
+    {
+      "start": 16.733,
+      "end": 25.353,
+      "label": "shot_3_black_video_format_issue"
+    },
+    {
+      "start": 26.817,
+      "end": 29.967,
+      "label": "shot_4_kevin_beat"
+    },
+    {
+      "start": 31.1,
+      "end": 38.6,
+      "label": "shot_5_lesson"
+    },
+    {
+      "start": 39.332,
+      "end": 45.952,
+      "label": "shot_6_review_agent"
+    },
+    {
+      "start": 47.265,
+      "end": 60.045,
+      "label": "shots_7_8_scorecard_and_fixes"
+    },
+    {
+      "start": 62.308,
+      "end": 67.358,
+      "label": "shot_9_cta"
+    }
+  ]
+}

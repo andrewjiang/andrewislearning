@@ -44,6 +44,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from ffmpeg_quality import aac_quality_args, h264_quality_args
+
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -53,11 +55,38 @@ DEFAULT_HEIGHT = 1920
 DEFAULT_FPS = 30
 
 
+def tool(name: str) -> str:
+    candidates = [
+        shutil.which(name),
+        f"/opt/homebrew/bin/{name}",
+        f"/usr/local/bin/{name}",
+        f"/Users/andrewjiang/.nix-profile/bin/{name}",
+        f"/usr/bin/{name}",
+    ]
+    seen: set[str] = set()
+    for candidate in candidates:
+        if not candidate or candidate in seen:
+            continue
+        seen.add(candidate)
+        try:
+            subprocess.run(
+                [candidate, "-version"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                check=True,
+            )
+            return candidate
+        except (OSError, subprocess.CalledProcessError):
+            continue
+    raise RuntimeError(f"{name} not found")
+
+
 @dataclass
 class Insert:
     at: float           # start time in the base track (seconds)
     duration: float     # how long the insert occupies (seconds)
     video: Path         # the b-roll clip to show during this window
+    start: float = 0.0  # in-point inside the insert clip
 
 
 @dataclass
@@ -72,7 +101,7 @@ class Plan:
 
 def probe_duration(path: Path) -> float:
     out = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+        [tool("ffprobe"), "-v", "error", "-show_entries", "format=duration",
          "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
         check=True, capture_output=True, text=True,
     )
@@ -91,7 +120,7 @@ def load_plan_from_json(json_path: Path) -> Plan:
         base=resolve(cfg["base"]),
         inserts=[
             Insert(at=float(i["at"]), duration=float(i["duration"]),
-                   video=resolve(i["video"]))
+                   video=resolve(i["video"]), start=float(i.get("start", i.get("in", 0.0))))
             for i in cfg["inserts"]
         ],
         output=resolve(cfg["output"]),
@@ -121,10 +150,12 @@ def validate_plan(plan: Plan) -> None:
                 f"runs past base duration ({base_dur:.2f}s)"
             )
         ins_dur = probe_duration(ins.video)
-        if ins.duration > ins_dur + 0.05:
+        if ins.start < 0:
+            raise ValueError(f"insert {ins.video.name} has negative start: {ins.start}")
+        if ins.start + ins.duration > ins_dur + 0.05:
             raise ValueError(
                 f"insert {ins.video.name} is only {ins_dur:.2f}s long but plan "
-                f"asks for {ins.duration}s"
+                f"asks for {ins.start:.2f}s + {ins.duration:.2f}s"
             )
         cursor = ins.at + ins.duration
 
@@ -146,14 +177,16 @@ def normalize_segment(
         f"setsar=1,fps={fps}"
     )
     cmd = [
-        "ffmpeg", "-y", "-loglevel", "error",
+        tool("ffmpeg"), "-y", "-loglevel", "error",
         "-ss", f"{start}",
         "-i", str(source),
         "-t", f"{duration}",
         "-an",
         "-vf", vf,
-        "-c:v", "libx264", "-pix_fmt", "yuv420p",
-        "-preset", "veryfast",
+        *h264_quality_args(
+            level="5.2" if max(width, height) >= 2160 else "4.2",
+            faststart=False,
+        ),
         str(out_path),
     ]
     subprocess.run(cmd, check=True)
@@ -167,10 +200,10 @@ def concat_segments(segments: list[Path], out_path: Path) -> None:
         list_file = f.name
     try:
         subprocess.run(
-            ["ffmpeg", "-y", "-loglevel", "error",
+            [tool("ffmpeg"), "-y", "-loglevel", "error",
              "-f", "concat", "-safe", "0",
              "-i", list_file,
-             "-c", "copy",
+             "-c", "copy", "-movflags", "+faststart",
              str(out_path)],
             check=True,
         )
@@ -181,9 +214,9 @@ def concat_segments(segments: list[Path], out_path: Path) -> None:
 def extract_audio(base: Path, out_path: Path) -> None:
     """Extract full audio from the base track, re-encoded to AAC for mux compatibility."""
     subprocess.run(
-        ["ffmpeg", "-y", "-loglevel", "error",
+        [tool("ffmpeg"), "-y", "-loglevel", "error",
          "-i", str(base),
-         "-vn", "-c:a", "aac", "-b:a", "192k",
+         "-vn", *aac_quality_args(),
          str(out_path)],
         check=True,
     )
@@ -193,12 +226,12 @@ def mux(video_only: Path, audio: Path, out_path: Path) -> None:
     """Mux a video-only mp4 with an audio track, no re-encode."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
     subprocess.run(
-        ["ffmpeg", "-y", "-loglevel", "error",
+        [tool("ffmpeg"), "-y", "-loglevel", "error",
          "-i", str(video_only),
          "-i", str(audio),
          "-c:v", "copy", "-c:a", "copy",
          "-map", "0:v:0", "-map", "1:a:0",
-         "-shortest",
+         "-shortest", "-movflags", "+faststart",
          str(out_path)],
         check=True,
     )
@@ -206,8 +239,8 @@ def mux(video_only: Path, audio: Path, out_path: Path) -> None:
 
 def assemble(plan: Plan) -> Path:
     """Run the assembly. Returns the output path."""
-    if shutil.which("ffmpeg") is None or shutil.which("ffprobe") is None:
-        raise RuntimeError("ffmpeg/ffprobe not found on PATH")
+    tool("ffmpeg")
+    tool("ffprobe")
 
     validate_plan(plan)
     base_dur = probe_duration(plan.base)
@@ -236,7 +269,7 @@ def assemble(plan: Plan) -> Path:
             # within the insert clip, extend the JSON with an "in" field.)
             seg_path = tmp_dir / f"seg_{seg_idx:02d}_insert.mp4"
             normalize_segment(
-                ins.video, 0.0, ins.duration,
+                ins.video, ins.start, ins.duration,
                 plan.width, plan.height, plan.fps, seg_path,
             )
             segments.append(seg_path)

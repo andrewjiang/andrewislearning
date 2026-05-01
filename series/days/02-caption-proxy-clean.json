@@ -1,0 +1,153 @@
+{
+  "_comment": "Day 2 proxy caption experiment A: clean active-word baseline.",
+  "engine": "remotion",
+  "platform": "reels",
+  "captionVariant": "founder_clean",
+  "input": "edits/day_02/day_02_proxy_assembled_v4.mp4",
+  "output": "edits/day_02/day_02_proxy_captioned_clean.mp4",
+  "width": 540,
+  "height": 960,
+  "fps": 30,
+  "transcripts": [
+    {
+      "path": "transcripts/day_02/IMG_0206.json",
+      "combined_offset": 0.0,
+      "leading_trim": 0.0,
+      "max_original": 3.8
+    },
+    {
+      "path": "transcripts/day_02/IMG_0207.json",
+      "combined_offset": 3.8,
+      "leading_trim": 0.46,
+      "max_original": 1.85
+    },
+    {
+      "path": "transcripts/day_02/IMG_0253-v1.json",
+      "combined_offset": 5.19,
+      "leading_trim": 0.18,
+      "max_original": 12.85
+    },
+    {
+      "path": "transcripts/day_02/IMG_0247.json",
+      "combined_offset": 17.86,
+      "leading_trim": 0.0,
+      "max_original": 8.62
+    },
+    {
+      "path": "transcripts/day_02/IMG_0210.json",
+      "combined_offset": 26.48,
+      "leading_trim": 0.05,
+      "max_original": 3.02
+    },
+    {
+      "path": "transcripts/day_02/IMG_0211.json",
+      "combined_offset": 29.45,
+      "leading_trim": 0.0,
+      "max_original": 7.5
+    },
+    {
+      "path": "transcripts/day_02/IMG_0220.json",
+      "combined_offset": 36.95,
+      "leading_trim": 0.0,
+      "max_original": 6.62
+    },
+    {
+      "path": "transcripts/day_02/IMG_0235.json",
+      "combined_offset": 43.57,
+      "leading_trim": 0.0,
+      "max_original": 12.78
+    },
+    {
+      "path": "transcripts/day_02/IMG_0236.json",
+      "combined_offset": 56.35,
+      "leading_trim": 0.11,
+      "max_original": 5.16
+    }
+  ],
+  "emphasis_words": [
+    "Day 2",
+    "Day 1",
+    "million",
+    "2,000 comments",
+    "2,000",
+    "comments",
+    "Instagram",
+    "AI agent",
+    "black",
+    "audio",
+    "video",
+    "format issue",
+    "Kevin",
+    "one like",
+    "watch",
+    "review agent",
+    "scorecard",
+    "cleaner captions",
+    "ffmpeg",
+    "faster",
+    "review",
+    "guide",
+    "plugin"
+  ],
+  "group_phrases": [
+    "video editor",
+    "almost didn't happen",
+    "AI agent",
+    "Day 1",
+    "Day 2",
+    "format issue",
+    "one like",
+    "black video",
+    "actually watch",
+    "review agent",
+    "full check",
+    "cleaner captions",
+    "on -screen",
+    "get to the point",
+    "full guide"
+  ],
+  "stylePreset": "founder_pop",
+  "fontFamily": "Manrope",
+  "maxWordsPerPage": 3,
+  "minWordsPerPage": 2,
+  "maxCharsPerPage": 24,
+  "maxGapWithinPage": 0.4,
+  "min_chunk_duration": 0.48,
+  "safeZone": {
+    "top": 0.12,
+    "bottom": 0.22,
+    "left": 0.08,
+    "right": 0.08
+  },
+  "anchor": "lower_safe",
+  "sceneOverrides": [
+    {
+      "start": 8.75,
+      "end": 13.8,
+      "anchor": "upper_safe"
+    },
+    {
+      "start": 39.65,
+      "end": 50.22,
+      "anchor": "upper_safe"
+    }
+  ],
+  "style": {
+    "size": 54,
+    "color": "FFFFFF",
+    "activeColor": "FF5A4F",
+    "activeScale": 1.035,
+    "pageEnterFrames": 5,
+    "emphasis_color": "FFA395",
+    "outline_color": "0A0A0A",
+    "stroke_alpha": 0.58,
+    "back_color": "0A0A0A",
+    "remotion_box_alpha": 0.0,
+    "text_replacements": {
+      "day two": "Day 2",
+      "day one": "Day 1",
+      "on -screen": "onscreen",
+      "x": "X"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "base": "raw/day_02/selfie_spine_tight.mp4",
+  "inserts": [
+    {
+      "at": 5.45,
+      "duration": 9.8,
+      "video": "raw/day_01/broll_take_01.mp4"
+    }
+  ],
+  "output": "edits/day_02/day_02_assembled.mp4",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30
+}

@@ -1,0 +1,9 @@
+{
+  "proxies": [
+    {
+      "raw": ".context/attachments/IMG_0260-v1.MOV",
+      "proxy": "proxies/attachments/IMG_0260-v1.proxy.mp4",
+      "duration": 3.305
+    }
+  ]
+}

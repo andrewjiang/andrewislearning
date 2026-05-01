@@ -1,0 +1,20 @@
+{
+  "name": "day-02-video-reviewer",
+  "version": "1.0.0",
+  "description": "Review a previous short-form video, generate evidence stills/contact sheets, critique what worked, and turn the findings into the next episode plan. Day 2 of @andrewislearning's series on automating content creation with AI.",
+  "author": {
+    "name": "Andrew",
+    "url": "https://andrewislearning.com"
+  },
+  "homepage": "https://andrewislearning.com/days/02",
+  "license": "MIT",
+  "keywords": [
+    "content-creation",
+    "video-review",
+    "short-form-video",
+    "instagram-reels",
+    "tiktok",
+    "andrewislearning",
+    "day-02"
+  ]
+}

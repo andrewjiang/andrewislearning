@@ -16,6 +16,14 @@
       "version": "1.0.0",
       "category": "content",
       "tags": ["day-01", "planning", "video-series", "ai-content"]
+    },
+    {
+      "name": "day-02-video-review",
+      "source": "./plugins/day-02-video-review",
+      "description": "Give your AI editor eyes before publish: sample frames, detect cuts, review captions, and return timestamped fixes.",
+      "version": "1.0.0",
+      "category": "content",
+      "tags": ["day-02", "video-review", "short-form", "captions", "ai-content"]
     }
   ]
 }

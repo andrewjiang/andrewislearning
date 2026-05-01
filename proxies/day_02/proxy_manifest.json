@@ -1,0 +1,19 @@
+{
+  "proxies": [
+    {
+      "raw": "raw/day_02/IMG_0274.mov",
+      "proxy": "proxies/day_02/IMG_0274.proxy.mp4",
+      "duration": 5.3
+    },
+    {
+      "raw": "raw/day_02/IMG_0271.MOV",
+      "proxy": "proxies/day_02/IMG_0271.proxy.mp4",
+      "duration": 4.009
+    },
+    {
+      "raw": "raw/day_02/IMG_0270.MOV",
+      "proxy": "proxies/day_02/IMG_0270.proxy.mp4",
+      "duration": 12.67
+    }
+  ]
+}

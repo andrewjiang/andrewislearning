@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claude Remotion Overlay"
+  short_description: "Render the Claude prompt modal overlay."
+  default_prompt: "Add or refine a Claude prompt modal overlay using the ContentCopilot Remotion captioner."

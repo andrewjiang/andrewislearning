@@ -1,0 +1,20 @@
+{
+  "base": "edits/day_02/day_02_spine_raw_v10_4k.mp4",
+  "inserts": [
+    {
+      "at": 8.27,
+      "duration": 4.9,
+      "video": "raw/day_01/broll_take_01.mp4"
+    },
+    {
+      "at": 35.37,
+      "duration": 6.7,
+      "video": "raw/day_02/screen_review_agent.mov",
+      "start": 5.6
+    }
+  ],
+  "output": "edits/day_02/day_02_assembled_v10_raw_4k.mp4",
+  "width": 2160,
+  "height": 3840,
+  "fps": 30
+}

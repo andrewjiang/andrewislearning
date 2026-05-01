@@ -1,0 +1,208 @@
+{
+  "_comment": "Day 2 v6 proxy caption pass with timed Remotion overlays: black Instagram Reel, Claude prompt modal, and FFmpeg tools modal.",
+  "engine": "remotion",
+  "platform": "reels",
+  "captionVariant": "kinetic_pop",
+  "input": "edits/day_02/day_02_proxy_assembled_v6.mp4",
+  "output": "edits/day_02/day_02_proxy_captioned_v6_overlays_1080.mp4",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "transcripts": [
+    {
+      "path": "transcripts/day_02/IMG_0274.json",
+      "combined_offset": 0.0,
+      "leading_trim": 0.0,
+      "max_original": 4.95
+    },
+    {
+      "path": "transcripts/day_02/IMG_0270.json",
+      "combined_offset": 4.95,
+      "leading_trim": 0.0,
+      "max_original": 11.6
+    },
+    {
+      "path": "transcripts/day_02/IMG_0247.json",
+      "combined_offset": 16.55,
+      "leading_trim": 0.0,
+      "max_original": 8.62
+    },
+    {
+      "path": "transcripts/day_02/IMG_0271.json",
+      "combined_offset": 25.17,
+      "leading_trim": 0.12,
+      "max_original": 3.25
+    },
+    {
+      "path": "transcripts/day_02/IMG_0211.json",
+      "combined_offset": 28.3,
+      "leading_trim": 0.0,
+      "max_original": 7.5
+    },
+    {
+      "path": "transcripts/day_02/IMG_0220.json",
+      "combined_offset": 35.8,
+      "leading_trim": 0.0,
+      "max_original": 6.62
+    },
+    {
+      "path": "transcripts/day_02/IMG_0235.json",
+      "combined_offset": 42.42,
+      "leading_trim": 0.0,
+      "max_original": 12.78
+    },
+    {
+      "path": "transcripts/day_02/IMG_0236.json",
+      "combined_offset": 55.2,
+      "leading_trim": 0.11,
+      "max_original": 5.16
+    }
+  ],
+  "overlays": [
+    {
+      "type": "instagram_reel_mock",
+      "start": 20.45,
+      "end": 25.12,
+      "username": "andrewislearning",
+      "audio": "Original audio",
+      "caption": "Day 1 of training AI to be my video editor. Written, edited, captioned, and published by AI. Follow + comment \"DAY 1\" for the guide + plugin.",
+      "captionPreview": "Day 1 of training AI...",
+      "likeCount": "0",
+      "commentCount": "0",
+      "shareCount": "0",
+      "videoLabel": "",
+      "avatar": ".context/attachments/fc3795ea-adaa-44df-a3d1-ff4c932af794.png",
+      "verified": true,
+      "anchor": "lower_right",
+      "width": 440,
+      "height": 760,
+      "sidePad": 32,
+      "bottomPercent": 0.01
+    },
+    {
+      "type": "claude_prompt_modal",
+      "start": 35.9,
+      "end": 38.45,
+      "greeting": "",
+      "placeholder": "How can I help you?",
+      "ask": "Build me a video review skill",
+      "typingTrack": ".context/sfx/mixkit_fast_laptop_typing_short.wav",
+      "typingVolume": 1,
+      "typeStartFrame": 12,
+      "typeFramesPerChar": 1.55,
+      "anchor": "lower_center",
+      "bottomPercent": 0.28
+    },
+    {
+      "type": "ffmpeg_cut_modal",
+      "start": 48.55,
+      "end": 53.4,
+      "title": "ffmpeg",
+      "subtitle": "cutting video",
+      "command": "ffmpeg -i raw.mov -ss 00:12 -to 00:18 -c copy clip.mp4",
+      "frames": [
+        ".context/previews/day_02_ffmpeg_overlay_frames/frame_01.png",
+        ".context/previews/day_02_ffmpeg_overlay_frames/frame_02.png",
+        ".context/previews/day_02_ffmpeg_overlay_frames/frame_03.png",
+        ".context/previews/day_02_ffmpeg_overlay_frames/frame_04.png",
+        ".context/previews/day_02_ffmpeg_overlay_frames/frame_05.png",
+        ".context/previews/day_02_ffmpeg_overlay_frames/frame_06.png",
+        ".context/previews/day_02_ffmpeg_overlay_frames/frame_07.png",
+        ".context/previews/day_02_ffmpeg_overlay_frames/frame_08.png"
+      ],
+      "anchor": "lower_center",
+      "bottomPercent": 0.22
+    }
+  ],
+  "emphasis_words": [
+    "Day 2",
+    "Day 1",
+    "million",
+    "Instagram",
+    "2,000 comments",
+    "2,000",
+    "comments",
+    "black",
+    "formatting issue",
+    "Kevin",
+    "one comment",
+    "actually watch",
+    "review agent",
+    "scorecard",
+    "cleaner captions",
+    "onscreen visuals",
+    "ffmpeg",
+    "faster",
+    "review",
+    "guide",
+    "plugin"
+  ],
+  "group_phrases": [
+    "video editor",
+    "almost didn't happen",
+    "AI agent",
+    "Day 1",
+    "Day 2",
+    "formatting issue",
+    "one comment",
+    "black video",
+    "actually watch",
+    "review agent",
+    "full check",
+    "cleaner captions",
+    "on -screen",
+    "onscreen visuals",
+    "get to the point",
+    "full guide"
+  ],
+  "stylePreset": "founder_pop",
+  "fontFamily": "Manrope",
+  "maxWordsPerPage": 2,
+  "minWordsPerPage": 1,
+  "maxCharsPerPage": 17,
+  "maxGapWithinPage": 0.32,
+  "min_chunk_duration": 0.34,
+  "safeZone": {
+    "top": 0.12,
+    "bottom": 0.21,
+    "left": 0.08,
+    "right": 0.08
+  },
+  "anchor": "lower_safe",
+  "sceneOverrides": [
+    {
+      "start": 20.45,
+      "end": 25.12,
+      "anchor": "upper_safe"
+    },
+    {
+      "start": 35.9,
+      "end": 45.2,
+      "anchor": "upper_safe"
+    },
+    {
+      "start": 48.55,
+      "end": 53.4,
+      "anchor": "upper_safe"
+    }
+  ],
+  "style": {
+    "size": 96,
+    "color": "FFFFFF",
+    "activeColor": "FF5A4F",
+    "activeScale": 1.025,
+    "pageEnterFrames": 6,
+    "emphasis_color": "FFA395",
+    "outline_color": "050505",
+    "stroke_alpha": 0.58,
+    "back_color": "0A0A0A",
+    "remotion_box_alpha": 0.0,
+    "text_replacements": {
+      "day two": "Day 2",
+      "Day two": "Day 2",
+      "day one": "Day 1",
+      "on -screen": "onscreen",
+      "x": "X"
+    }
+  }
+}

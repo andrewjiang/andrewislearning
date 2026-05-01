@@ -1,0 +1,16 @@
+{
+  "_comment": "Day 2 Instagram-only publish config. TikTok was not connected in Post for Me at publish time.",
+  "video": "edits/day_02/day_02_captioned_v11_fast_readable_4k_master.mp4",
+  "cover": ".context/reel_cover_custom/day_02_claude_day_two_cover.png",
+  "_caption_note": "Day 2 caption follows Day 1 format: short searchable body, comment keyword CTA, dot spacer, 5 hashtags.",
+  "caption": "Day 2 of training AI to be my video editor. I built a review agent that watches before posting. Follow + comment 'REVIEW' for the guide + plugin.\n.\n.\n.\n.\n#ClaudeAI #AIagents #ContentAutomation #BuildInPublic #AIWorkflow",
+  "platforms": [
+    "instagram"
+  ],
+  "platform_configurations": {
+    "instagram": {
+      "share_to_feed": true
+    }
+  },
+  "output": "published/day_02/receipt-instagram.json"
+}

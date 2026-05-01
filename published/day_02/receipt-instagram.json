@@ -1,0 +1,30 @@
+{
+  "post_id": "sp_lGwH3n2hJO4vWP7KwnlBO",
+  "video": "edits/day_02/day_02_captioned_v11_fast_readable_4k_master.mp4",
+  "caption": "Day 2 of training AI to be my video editor. I built a review agent that watches before posting. Follow + comment 'REVIEW' for the guide + plugin.\n.\n.\n.\n.\n#ClaudeAI #AIagents #ContentAutomation #BuildInPublic #AIWorkflow",
+  "cover": ".context/reel_cover_custom/day_02_claude_day_two_cover.png",
+  "platforms": [
+    "instagram"
+  ],
+  "platform_configurations": {
+    "instagram": {
+      "share_to_feed": true
+    }
+  },
+  "media_url": "https://data.postforme.dev/storage/v1/object/public/post-media/proj_unwqaKYY4lGfXBCg3XL/87aaf5fb09f780b136f28b7e",
+  "thumbnail_url": "https://data.postforme.dev/storage/v1/object/public/post-media/proj_unwqaKYY4lGfXBCg3XL/cb87e99ea1de07ea4afb4e24",
+  "results": [
+    {
+      "id": "spr_9mVdkzswkGgV1gDt1en9T",
+      "post_id": "sp_lGwH3n2hJO4vWP7KwnlBO",
+      "success": true,
+      "error": null,
+      "platform_data": {
+        "id": "17877960789570446",
+        "url": "https://www.instagram.com/reel/DXx0j_njUPu/"
+      }
+    }
+  ],
+  "published_at": "2026-04-30T18:56:42-0700",
+  "instagram_url": "https://www.instagram.com/reel/DXx0j_njUPu/"
+}

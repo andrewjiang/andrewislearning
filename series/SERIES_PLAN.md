@@ -6,7 +6,7 @@ Each day = one specific, copyable automation. Recipes, not vibes.
 > Goal: by Day 7, one command turns a raw phone take into a postable vertical video.
 
 - **Day 1 — Plan & scaffold.** Brainstorm with Claude, set up folders, commit empty stubs. *(this episode)*
-- **Day 2 — Capture loop.** AirDrop / iCloud Drive into `raw/`. ffmpeg + Python deps installed.
+- **Day 2 — Review loop.** Build the skill that watches Day 1, scores the edit, extracts proof stills, and turns the critique into the next brief.
 - **Day 3 — Transcribe.** Whisper (local or API) → word-level JSON in `transcripts/`.
 - **Day 4 — Cut filler.** Claude reads the transcript, writes a cut list, ffmpeg executes. Silence + "um/uh/like" gone.
 - **Day 5 — Burn-in captions.** Transcript → SRT → ffmpeg overlay.

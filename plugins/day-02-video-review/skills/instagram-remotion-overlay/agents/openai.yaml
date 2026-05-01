@@ -1,0 +1,4 @@
+interface:
+  display_name: "Instagram Remotion Overlay"
+  short_description: "Render Instagram proof and Reel mock overlays."
+  default_prompt: "Add or refine an Instagram proof card or mini Reel mock overlay using the ContentCopilot Remotion captioner."

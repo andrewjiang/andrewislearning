@@ -6,6 +6,8 @@ edits/**/*.mp4
 edits/**/*.mov
 published/**/*.mp4
 published/**/*.mov
+proxies/**/*.mp4
+proxies/**/*.mov
 
 # Keep the folder skeleton so a fresh clone has the structure
 !**/.gitkeep
@@ -21,6 +23,7 @@ venv/
 
 # Node / web build
 node_modules/
+captioner/.cache/
 web/dist/
 web/.cache/
 
@@ -34,3 +37,4 @@ web/.cache/
 
 # Debug iteration artifacts (frame samples, audio extractions)
 web/assets/
+edits/**/*.captions.json

@@ -1,0 +1,4 @@
+interface:
+  display_name: "FFmpeg Remotion Overlay"
+  short_description: "Render the FFmpeg cutting modal overlay."
+  default_prompt: "Add or refine an FFmpeg cutting modal and filmstrip overlay using the ContentCopilot Remotion captioner."

@@ -1,0 +1,59 @@
+{
+  "proxies": [
+    {
+      "raw": "raw/day_02/IMG_0196.MOV",
+      "proxy": "proxies/day_02/IMG_0196.proxy.mp4",
+      "duration": 4.777
+    },
+    {
+      "raw": "raw/day_02/IMG_0204.MOV",
+      "proxy": "proxies/day_02/IMG_0204.proxy.mp4",
+      "duration": 10.644
+    },
+    {
+      "raw": "raw/day_02/IMG_0206.MOV",
+      "proxy": "proxies/day_02/IMG_0206.proxy.mp4",
+      "duration": 6.1
+    },
+    {
+      "raw": "raw/day_02/IMG_0207.MOV",
+      "proxy": "proxies/day_02/IMG_0207.proxy.mp4",
+      "duration": 2.814
+    },
+    {
+      "raw": "raw/day_02/IMG_0210.MOV",
+      "proxy": "proxies/day_02/IMG_0210.proxy.mp4",
+      "duration": 4.35
+    },
+    {
+      "raw": "raw/day_02/IMG_0211.MOV",
+      "proxy": "proxies/day_02/IMG_0211.proxy.mp4",
+      "duration": 8.233
+    },
+    {
+      "raw": "raw/day_02/IMG_0220.MOV",
+      "proxy": "proxies/day_02/IMG_0220.proxy.mp4",
+      "duration": 7.934
+    },
+    {
+      "raw": "raw/day_02/IMG_0235.MOV",
+      "proxy": "proxies/day_02/IMG_0235.proxy.mp4",
+      "duration": 14.933
+    },
+    {
+      "raw": "raw/day_02/IMG_0236.MOV",
+      "proxy": "proxies/day_02/IMG_0236.proxy.mp4",
+      "duration": 6.27
+    },
+    {
+      "raw": "raw/day_02/IMG_0247.MOV",
+      "proxy": "proxies/day_02/IMG_0247.proxy.mp4",
+      "duration": 10.046
+    },
+    {
+      "raw": "raw/day_01/broll_take_01.mp4",
+      "proxy": "proxies/day_01/broll_take_01.proxy.mp4",
+      "duration": 9.933
+    }
+  ]
+}

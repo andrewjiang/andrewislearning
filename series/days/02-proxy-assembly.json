@@ -1,0 +1,14 @@
+{
+  "base": "proxies/day_02/selfie_spine_proxy_tight.mp4",
+  "inserts": [
+    {
+      "at": 5.65,
+      "duration": 9.8,
+      "video": "proxies/day_01/broll_take_01.proxy.mp4"
+    }
+  ],
+  "output": "edits/day_02/day_02_proxy_assembled.mp4",
+  "width": 540,
+  "height": 960,
+  "fps": 30
+}

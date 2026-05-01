@@ -1,0 +1,8 @@
+file '../../raw/day_02/IMG_0206.MOV'
+file '../../raw/day_02/IMG_0204.MOV'
+file '../../raw/day_02/IMG_0247.MOV'
+file '../../raw/day_02/IMG_0210.MOV'
+file '../../raw/day_02/IMG_0211.MOV'
+file '../../raw/day_02/IMG_0220.MOV'
+file '../../raw/day_02/IMG_0235.MOV'
+file '../../raw/day_02/IMG_0236.MOV'

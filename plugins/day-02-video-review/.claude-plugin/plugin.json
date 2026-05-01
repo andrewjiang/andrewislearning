@@ -1,0 +1,20 @@
+{
+  "name": "day-02-video-review",
+  "version": "1.0.0",
+  "description": "Give your AI editor eyes. Sample frames, detect cuts, profile audio, measure caption density — then critique the video with timestamped, fix-as-config-diff feedback. Day 2 of @andrewislearning's series on training AI to be a video editor.",
+  "author": {
+    "name": "Andrew",
+    "url": "https://andrewislearning.com"
+  },
+  "homepage": "https://andrewislearning.com/days/02",
+  "license": "MIT",
+  "keywords": [
+    "video-review",
+    "video-critique",
+    "short-form",
+    "instagram-reels",
+    "tiktok",
+    "andrewislearning",
+    "day-02"
+  ]
+}

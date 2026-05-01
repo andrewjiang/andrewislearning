@@ -1,0 +1,7 @@
+interface:
+  display_name: "Voice Enhance Reel"
+  short_description: "Clean and polish Reel voice audio"
+  default_prompt: "Use $voice-enhance-reel to clean and polish the voice audio in this Reel clip."
+
+policy:
+  allow_implicit_invocation: true

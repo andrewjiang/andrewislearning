@@ -1,0 +1,4 @@
+interface:
+  display_name: "Spoken Reveal Captions"
+  short_description: "Render captions where words appear only when spoken."
+  default_prompt: "Add or refine stable-position word reveal captions using the ContentCopilot Remotion captioner."

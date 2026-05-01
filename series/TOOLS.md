@@ -14,7 +14,10 @@ Each tool is introduced on a specific day so we don't pile the whole stack on Da
 | Remotion | Code-based motion graphics — intros, outros, animated captions. | Day 8 |
 | Submagic API (optional) | Viral-style word-by-word captions if Remotion is too much work. | Day 10 |
 | Replicate / Runway API | AI B-roll from transcript keywords. | Day 12 |
-| ElevenLabs API | Voice cleanup, fix flubs without re-recording, eventually dubs. | Day 26 |
+| Cleanvoice API | Primary automated voice cleanup for Reels: noise removal, studio polish, normalization. | Day 2 |
+| ElevenLabs Voice Isolator API | Heavy-noise fallback before the local/social mastering pass. | Day 2 |
+| Resemble Audio Enhancement API | Backup studio-sound provider if Cleanvoice is not available. | Day 2 |
+| ElevenLabs API | Fix flubbed lines without re-recording, eventually dubs. | Day 26 |
 
 ## Publishing
 
@@ -44,6 +47,7 @@ Rough monthly when fully scaled (post Day 21):
 - Remotion: free (self-hosted) / ~$15 cloud
 - Replicate / Runway: ~$30 budget for B-roll generation
 - Ayrshare: ~$30
+- Cleanvoice / voice enhancement: usage-based, test on short clips first
 - ElevenLabs: ~$22
 - Claude API (if not using Code subscription): ~$30
 

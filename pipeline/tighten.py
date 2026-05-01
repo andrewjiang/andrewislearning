@@ -36,6 +36,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+from ffmpeg_quality import aac_quality_args, h264_quality_args
+
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -89,8 +91,8 @@ def tighten(input_path: Path, windows: list[Window], out_path: Path) -> Path:
         "-i", str(input_path),
         "-filter_complex", filter_complex,
         "-map", "[v]", "-map", "[a]",
-        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "veryfast",
-        "-c:a", "aac", "-b:a", "192k",
+        *h264_quality_args(),
+        *aac_quality_args(),
         str(out_path),
     ]
     subprocess.run(cmd, check=True)

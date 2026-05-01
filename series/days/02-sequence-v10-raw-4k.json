@@ -1,0 +1,53 @@
+{
+  "output": "edits/day_02/day_02_spine_raw_v10_4k.mp4",
+  "width": 2160,
+  "height": 3840,
+  "fps": 30,
+  "transition": 0,
+  "crf": 14,
+  "preset": "medium",
+  "segments": [
+    {
+      "source": "raw/day_02/IMG_0274.mov",
+      "start": 0.0,
+      "end": 4.95,
+      "label": "shot_1_day_2_clean_opener"
+    },
+    {
+      "source": "raw/day_02/IMG_0270.MOV",
+      "start": 0.0,
+      "end": 11.6,
+      "label": "shot_2_clean_recap_single_take"
+    },
+    {
+      "source": "raw/day_02/IMG_0247.MOV",
+      "start": 0.0,
+      "end": 8.62,
+      "label": "shot_3_black_video_format_issue"
+    },
+    {
+      "source": "raw/day_02/IMG_0211.MOV",
+      "start": 0.0,
+      "end": 7.5,
+      "label": "shot_5_lesson"
+    },
+    {
+      "source": "raw/day_02/IMG_0220.MOV",
+      "start": 0.0,
+      "end": 6.62,
+      "label": "shot_6_review_agent"
+    },
+    {
+      "source": "raw/day_02/IMG_0235.MOV",
+      "start": 0.0,
+      "end": 12.78,
+      "label": "shots_7_8_scorecard_and_fixes"
+    },
+    {
+      "source": "raw/day_02/IMG_0236.MOV",
+      "start": 0.11,
+      "end": 5.16,
+      "label": "shot_9_cta"
+    }
+  ]
+}

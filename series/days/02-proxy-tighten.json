@@ -1,0 +1,51 @@
+{
+  "input": "proxies/day_02/selfie_spine_proxy_raw.mp4",
+  "output": "proxies/day_02/selfie_spine_proxy_tight.mp4",
+  "keep": [
+    {
+      "start": 0.0,
+      "end": 3.65,
+      "label": "shot_1_day_2_reveal_without_long_tail"
+    },
+    {
+      "start": 6.10,
+      "end": 8.10,
+      "label": "shot_1_short_day_one_almost_didnt_happen_pickup"
+    },
+    {
+      "start": 8.915,
+      "end": 18.965,
+      "label": "shot_2_recap_proof"
+    },
+    {
+      "start": 19.548,
+      "end": 28.168,
+      "label": "shot_3_black_video_format_issue"
+    },
+    {
+      "start": 29.632,
+      "end": 32.782,
+      "label": "shot_4_kevin_beat"
+    },
+    {
+      "start": 33.915,
+      "end": 41.415,
+      "label": "shot_5_lesson"
+    },
+    {
+      "start": 42.147,
+      "end": 48.767,
+      "label": "shot_6_review_agent"
+    },
+    {
+      "start": 50.080,
+      "end": 62.860,
+      "label": "shots_7_8_scorecard_and_fixes"
+    },
+    {
+      "start": 65.123,
+      "end": 70.173,
+      "label": "shot_9_cta"
+    }
+  ]
+}

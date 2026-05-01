@@ -1,5 +1,7 @@
 {
-  "_comment": "Day 1 captions config. Reads transcripts (in original take time), applies the same tighten transforms as 01-tighten.json, generates ASS subtitles in our cream/orange palette, burns them into final_unsped.mp4. Speedup is applied AFTER captioning so they speed up naturally with the audio.",
+  "_comment": "Day 1 captions config. Reads transcripts (in original take time), applies the same tighten transforms as 01-tighten.json, renders Remotion captions by default, and keeps ASS available via --engine ass. Speedup is applied AFTER captioning so captions speed up naturally with the audio.",
+  "engine": "remotion",
+  "platform": "reels",
   "input": "edits/day_01/final_unsped.mp4",
   "output": "edits/day_01/final_captioned.mp4",
   "tighten_config": "series/days/01-tighten.json",
@@ -16,22 +18,42 @@
       "leading_trim": 0.5
     }
   ],
-  "_emphasis_note": "Multi-word phrases auto-stay-together as chunks (AI agent, 30 days, every day, free guide, Claude plugin, day one→'DAY 1'). 'AI' alone removed so it pairs with 'agent'.",
+  "_emphasis_note": "Multi-word phrases auto-stay-together as chunks (AI agent, 30 days, every day, free guide, Claude plugin, day one→'Day 1'). 'AI' alone removed so it pairs with 'agent'.",
   "emphasis_words": [
-    "million", "2,000", "2000", "comments",
+    "million", "2,000 comments", "2,000", "2000", "comments",
     "outplayed", "challenge",
     "30 days", "AI agent",
     "Claude", "day one",
     "free guide", "Claude plugin",
     "write", "edit", "publish", "every day"
   ],
+  "impactPhrases": ["write edit publish"],
+  "impactWords": [],
+  "impactAnchor": "mid_safe",
+  "impactStylePreset": "impact_word",
   "_group_phrases_note": "Phrases that should stay together as one chunk but NOT get the emphasis color. Force chunking only.",
   "group_phrases": [
+    "step one",
+    "wasn't even recorded",
+    "beginning to end",
     "follow and comment",
     "I'll DM you"
   ],
+  "stylePreset": "founder_pop",
+  "fontFamily": "Manrope",
+  "maxWordsPerPage": 3,
+  "minWordsPerPage": 2,
+  "maxCharsPerPage": 26,
+  "maxGapWithinPage": 0.40,
+  "safeZone": {
+    "top": 0.12,
+    "bottom": 0.22,
+    "left": 0.08,
+    "right": 0.08
+  },
+  "anchor": "lower_safe",
   "max_words_per_chunk": 3,
-  "min_chunk_duration": 0.40,
+  "min_chunk_duration": 0.55,
   "style": {
     "font": "Liberation Sans Bold",
     "_font_note": "drop fonts/main-bold.ttf at repo root to override (Inter, Montserrat, Plus Jakarta Sans recommended)",
@@ -40,10 +62,15 @@
     "_size_note": "default 96pt; emphasis 96 × 1.15 = ~110pt. Bigger emphasis text draws the eye without color alone.",
     "color": "FFFFFF",
     "_color_note": "pure white — research consensus for default short-form captions",
+    "activeColor": "FF5A4F",
+    "activeScale": 1.025,
+    "pageEnterFrames": 6,
     "emphasis_color": "FFA395",
     "_emphasis_note": "Lighter salmon (was FF8C7A). RGB(255, 163, 149) — added 20% white to each channel. Softer pastel coral, still pink-leaning, less saturated. Easier on the eye for bigger text.",
     "outline_color": "0A0A0A",
+    "stroke_alpha": 0.58,
     "back_color": "0A0A0A",
+    "remotion_box_alpha": 0.0,
     "border_style": 3,
     "_border_note": "3 = opaque pill behind text; 1 = outline only",
     "box_alpha": "26",
@@ -53,10 +80,13 @@
     "y_position": 0.73,
     "_position_note": "73% from top — clears IG UI safe zone (bottom ~14% should stay clear for platform overlays). Bumped up from 78%.",
     "text_replacements": {
-      "DAY ONE": "DAY 1",
-      "RECORDED": "RECORDING"
+      "day one": "Day 1",
+      "step one": "Step one",
+      "training in AI": "training an AI",
+      "wasn't even recorded": "wasn't even recording",
+      "recorded": "recording"
     },
-    "_replacements_note": "render-time text swaps. 'day one' is what whisper transcribed; 'DAY 1' is what we want viewers to see (matches the CTA keyword)."
+    "_replacements_note": "render-time text swaps. Keeps short-form wording clean while preserving the underlying word timing."
   },
   "width": 1080,
   "height": 1920

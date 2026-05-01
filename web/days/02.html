@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 2 — The AI almost posted a black video · andrewislearning</title>
+<meta name="description" content="Day 2 of training AI to be my video editor: a review agent that samples frames, checks captions, and scores the edit before publishing.">
+<meta property="og:title" content="Day 2 — The AI almost posted a black video">
+<meta property="og:description" content="A free Claude plugin that gives your AI editor eyes before it publishes.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://andrewislearning.com/days/02">
+<meta property="og:image" content="https://andrewislearning.com/cdn/day_02/cover.jpg">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #ffffff;
+    --ink: #111111;
+    --muted: #555555;
+    --softer: #777777;
+    --soft: #f4f4f4;
+    --soft-2: #faf9f7;
+    --accent: #ff8f7f;
+    --accent-bg: #fff4f1;
+    --accent-deep: #8a2d1c;
+    --code-bg: #0a0a0a;
+    --code-ink: #f4ead5;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  header {
+    padding: 22px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid #eee;
+  }
+  .wordmark { font-size: 14px; }
+  .wordmark a { color: inherit; text-decoration: none; }
+  .back { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--ink); }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+  .day-tag {
+    font-size: 12px;
+    color: var(--softer);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  h1 {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 16px;
+  }
+  .hook {
+    font-size: clamp(20px, 3.6vw, 26px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+  .lead {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0 0 24px;
+    max-width: 560px;
+  }
+  .meta-flex {
+    display: inline-block;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    color: var(--accent-deep);
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 24px;
+  }
+  .tldr {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 24px 26px;
+    margin: 0 0 40px;
+  }
+  .tldr h2 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: var(--accent-deep);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .tldr p {
+    margin: 0 0 16px;
+    color: #2a2a2a;
+    font-size: 15px;
+  }
+  .tldr p:last-child { margin-bottom: 0; }
+  .video-wrap {
+    aspect-ratio: 9 / 16;
+    max-height: 720px;
+    max-width: 405px;
+    margin: 8px auto 56px;
+    background: #000;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  }
+  .video-wrap video { width: 100%; height: 100%; display: block; object-fit: cover; }
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 56px 0 12px;
+  }
+  h2:first-of-type { margin-top: 0; }
+  p { margin: 0 0 14px; color: #2a2a2a; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    font-size: 0.9em;
+    background: var(--soft);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+  .install {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    position: relative;
+  }
+  .install .line { white-space: nowrap; }
+  .install .prompt { color: #6e6a66; }
+  .copy-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: #2a2a2a;
+    color: #ddd;
+    border: 1px solid #3a3a3a;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .copy-btn:hover { background: #3a3a3a; }
+  .ribbon {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 16px 0 0;
+  }
+  @media (min-width: 600px) {
+    .ribbon { grid-template-columns: repeat(3, 1fr); }
+  }
+  .ribbon-step {
+    background: var(--soft-2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #ececec;
+  }
+  .ribbon-step .num {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-deep);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .ribbon-step .name {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .ribbon-step .desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  details.script {
+    background: var(--soft-2);
+    border: 1px solid #ececec;
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 14px 22px;
+    margin: 12px 0 0;
+  }
+  details.script summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 14px;
+    list-style: none;
+    padding: 4px 0;
+  }
+  details.script summary::-webkit-details-marker { display: none; }
+  details.script summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 8px;
+    color: var(--accent-deep);
+    transition: transform 120ms;
+  }
+  details.script[open] summary::before { transform: rotate(90deg); }
+  details.script .body { padding: 12px 0 4px; font-size: 14px; line-height: 1.7; }
+  details.script .body p { margin: 0 0 12px; }
+  details.script .body p:last-child { margin-bottom: 0; }
+  details.script .body em { color: var(--softer); font-style: normal; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 14px; margin-bottom: 2px; }
+  .links {
+    margin-top: 20px;
+    font-size: 14px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .links a {
+    color: var(--accent-deep);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .links a:hover { border-bottom-color: var(--accent); }
+  .next-up {
+    background: var(--soft);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 56px 0 0;
+  }
+  .next-up h3 { margin: 0; color: var(--softer); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; }
+  .next-up p { margin: 6px 0 0; font-size: 14px; }
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    padding: 28px;
+    border-top: 1px solid #eee;
+  }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark"><a href="/">@andrewislearning</a></div>
+  <a class="back" href="/">← all days</a>
+</header>
+
+<main>
+  <p class="day-tag">Day 02 · April 30, 2026</p>
+  <h1>The AI almost posted a black video</h1>
+  <span class="meta-flex">review agent · frame sampling · scorecard</span>
+  <p class="hook">"Before it publishes anything, it has to actually watch what it made."</p>
+  <p class="lead">
+    Day 1 proved the pipeline could write, edit, caption, and publish. Day 2 adds the missing loop: an AI reviewer that samples the final video, checks the captions and pacing, and gives the edit a scorecard before it goes live.
+  </p>
+
+  <div class="tldr">
+    <h2>You don't need to read this</h2>
+    <p>If you have <a href="https://claude.com/code">Claude Code</a>, install the Day 2 plugin and ask Claude to review a short-form video before you publish it.</p>
+    <div class="install">
+      <button class="copy-btn" onclick="copyInstall(this)">copy</button>
+      <div class="line"><span class="prompt">$ </span>/plugin marketplace add andrewjiang/andrewislearning</div>
+      <div class="line"><span class="prompt">$ </span>/plugin install day-02-video-review@andrewislearning</div>
+    </div>
+  </div>
+
+  <div class="video-wrap">
+    <video controls playsinline preload="metadata" poster="/cdn/day_02/cover.jpg">
+      <source src="/cdn/day_02/final.mp4" type="video/mp4">
+      Your browser doesn't support video. <a href="/cdn/day_02/final.mp4">Download the video</a>.
+    </video>
+  </div>
+
+  <h2>What the plugin does</h2>
+  <p>The plugin gives Claude a practical review loop for short-form video. It does not just say whether the edit feels good; it produces evidence Claude can inspect and turn into concrete config changes.</p>
+  <div class="ribbon">
+    <div class="ribbon-step">
+      <div class="num">01</div>
+      <div class="name">Sample frames</div>
+      <div class="desc">Exports stills at a fixed cadence so Claude can see the final artifact.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">02</div>
+      <div class="name">Detect cuts</div>
+      <div class="desc">Finds scene changes, shot count, average shot length, and long static stretches.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">03</div>
+      <div class="name">Review script</div>
+      <div class="desc">Checks hook, pacing, recap, CTA, open loops, and spoken length before recording.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">04</div>
+      <div class="name">Check captions</div>
+      <div class="desc">Uses spoken-reveal captions so words appear when said without layout jumping.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">05</div>
+      <div class="name">Show the tools</div>
+      <div class="desc">Adds Remotion overlays for Claude prompts, Instagram proof, and ffmpeg cuts.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">06</div>
+      <div class="name">Polish voice</div>
+      <div class="desc">Runs the voice cleanup path, then masters the final reel for social upload.</div>
+    </div>
+  </div>
+
+  <h2>The guide</h2>
+  <p>Run the reviewer against the video you are about to post, then ask Claude for a scorecard and a patch list.</p>
+  <div class="install">
+    <div class="line"><span class="prompt">$ </span>python plugins/day-02-video-review/skills/review-video/senses/frames.py edits/day_02/final.mp4 --fps 1</div>
+    <div class="line"><span class="prompt">$ </span>python plugins/day-02-video-review/skills/review-video/senses/cuts.py edits/day_02/final.mp4</div>
+  </div>
+  <p>Give Claude the generated frame manifest, sampled stills, cut metrics, caption config, and publish goal. The useful output is specific: which timestamp is weak, why it hurts retention, and what file or config should change.</p>
+
+  <h2>The script</h2>
+  <p>About 54 seconds after speedup. The Kevin shoutout was cut because it slowed the episode down.</p>
+  <details class="script">
+    <summary>Read the final spoken script</summary>
+    <div class="body">
+      <em>Selfie</em>
+      <p>Day 2... of teaching AI to be my video editor. And Day 1 almost didn't happen.</p>
+      <em>Selfie + Instagram proof</em>
+      <p>To recap: my X video got nearly a million views. Someone reposted it to Instagram, got two thousand comments. So I'm training AI to be the editor I never had.</p>
+      <em>Selfie + black Reel mockup</em>
+      <p>Yesterday my AI agent posted Day 1: completely black. Audio worked, picture didn't. Video format issue.</p>
+      <em>Selfie</em>
+      <p>So the lesson is obvious. Before this thing publishes anything, it has to actually watch what it made. Like an editor.</p>
+      <em>Claude + terminal</em>
+      <p>So I asked Claude to build a review agent. Sample the frames, read the transcript, give me a full check before publishing.</p>
+      <em>Scorecard</em>
+      <p>It gives me a scorecard and areas to improve.</p>
+      <em>Fixes</em>
+      <p>Three fixes from Day 1. Cleaner captions. Better onscreen visuals for the agent's tools, like ffmpeg for cutting clips. And get to the point faster.</p>
+      <em>Selfie</em>
+      <p>Day 2 is the review agent. Comment <strong>'REVIEW'</strong> and I'll send you the guide and plugin.</p>
+    </div>
+  </details>
+
+  <h2>The source</h2>
+  <p>Browse, fork, or run any of it locally:</p>
+  <div class="links">
+    <a href="https://github.com/andrewjiang/andrewislearning">github repo</a>
+    <a href="https://github.com/andrewjiang/andrewislearning/tree/main/plugins/day-02-video-review">plugin source</a>
+    <a href="https://github.com/andrewjiang/andrewislearning/blob/main/series/days/02-guide.md">full guide</a>
+    <a href="https://www.instagram.com/reel/DXx0j_njUPu/">published reel</a>
+  </div>
+
+  <div class="next-up">
+    <h3>Tomorrow — Day 03</h3>
+    <p>
+      The review loop starts turning its own findings into better edits. Follow
+      <a href="https://instagram.com/andrewislearning">@andrewislearning</a> for the next 28 days.
+    </p>
+  </div>
+</main>
+
+<footer>
+  <a href="https://github.com/andrewjiang/andrewislearning">github</a> ·
+  <a href="https://instagram.com/andrewislearning">instagram</a> ·
+  <a href="https://tiktok.com/@andrewislearning">tiktok</a>
+</footer>
+
+<script>
+function copyInstall(btn) {
+  const text = "/plugin marketplace add andrewjiang/andrewislearning\n/plugin install day-02-video-review@andrewislearning";
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "copied";
+    setTimeout(() => { btn.textContent = orig; }, 1400);
+  });
+}
+</script>
+
+</body>
+</html>

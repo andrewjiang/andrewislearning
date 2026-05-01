@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Day 1 — Training AI to be my video editor · andrewislearning</title>
-<meta name="description" content="A step-by-step guide to setting up a Claude agent that writes, edits, captions, and publishes short-form video for you.">
+<meta name="description" content="The whole video — script, edit, captions, publish — was made by AI. Free Claude plugin to plan your own daily series.">
 <meta property="og:title" content="Day 1 — Training AI to be my video editor">
-<meta property="og:description" content="A guide to setting up a Claude agent that writes, edits, captions, and publishes short-form video.">
+<meta property="og:description" content="The whole video was written, edited, captioned, and published by AI. Free Claude plugin.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://andrewislearning.com/days/01">
 <meta property="og:image" content="https://andrewislearning.com/cdn/day_01/cover.jpg">
@@ -32,7 +32,7 @@
     color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
+    line-height: 1.55;
   }
   header {
     padding: 22px 28px;
@@ -63,46 +63,62 @@
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    margin: 0 0 28px;
+    margin: 0 0 16px;
   }
   .hook {
     font-size: clamp(20px, 3.6vw, 26px);
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.2;
     letter-spacing: -0.01em;
     color: var(--ink);
-    margin: 32px 0 16px;
+    margin: 0 0 16px;
   }
   .lead {
-    font-size: 17px;
-    color: #2a2a2a;
-    margin: 0 0 32px;
-    max-width: 600px;
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0 0 24px;
+    max-width: 540px;
+  }
+  .meta-flex {
+    display: inline-block;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    color: var(--accent-deep);
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 24px;
   }
 
-  /* TL;DR — sits at the top, has the install commands */
+  /* TL;DR callout — the most important block on the page */
   .tldr {
     background: var(--accent-bg);
     border: 1px solid var(--accent);
     border-radius: 14px;
-    padding: 22px 26px;
-    margin: 0 0 36px;
+    padding: 24px 26px;
+    margin: 0 0 40px;
   }
   .tldr h2 {
     margin: 0 0 8px;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--accent-deep);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     font-weight: 700;
   }
   .tldr p {
-    margin: 0 0 14px;
+    margin: 0 0 16px;
     color: #2a2a2a;
     font-size: 15px;
   }
   .tldr p:last-child { margin-bottom: 0; }
-  .tldr .install { margin-top: 12px; margin-bottom: 0; }
+  .tldr .install {
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
 
   .video-wrap {
     aspect-ratio: 9 / 16;
@@ -117,17 +133,12 @@
   .video-wrap video { width: 100%; height: 100%; display: block; object-fit: cover; }
 
   h2 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: -0.01em;
-    margin: 56px 0 8px;
+    margin: 56px 0 12px;
   }
   h2:first-of-type { margin-top: 0; }
-  .section-intro {
-    color: var(--muted);
-    font-size: 15px;
-    margin: 0 0 28px;
-  }
   p { margin: 0 0 14px; color: #2a2a2a; }
   code {
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
@@ -136,7 +147,6 @@
     padding: 1px 6px;
     border-radius: 3px;
   }
-  .prompt { color: #6e6a66; }
 
   .install {
     background: var(--code-bg);
@@ -150,6 +160,7 @@
     position: relative;
   }
   .install .line { white-space: nowrap; }
+  .install .prompt { color: #6e6a66; }
   .copy-btn {
     position: absolute;
     top: 10px; right: 10px;
@@ -164,77 +175,74 @@
   }
   .copy-btn:hover { background: #3a3a3a; }
 
-  /* Guide steps */
-  .step {
-    margin: 36px 0 0;
-    padding-top: 28px;
-    border-top: 1px solid #eee;
+  /* Process ribbon — visual flow of the 6 stages */
+  .ribbon {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 16px 0 0;
   }
-  .step:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
-  .step .num {
+  @media (min-width: 600px) {
+    .ribbon { grid-template-columns: repeat(3, 1fr); }
+  }
+  .ribbon-step {
+    background: var(--soft-2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #ececec;
+  }
+  .ribbon-step .num {
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
     font-size: 11px;
     font-weight: 700;
     color: var(--accent-deep);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
   }
-  .step h3 {
-    font-size: 19px;
+  .ribbon-step .name {
     font-weight: 700;
-    letter-spacing: -0.01em;
-    margin: 0 0 12px;
-    color: var(--ink);
+    font-size: 15px;
+    margin-bottom: 4px;
   }
-  .step p { font-size: 15px; line-height: 1.65; }
-  .tools {
+  .ribbon-step .desc {
     font-size: 13px;
     color: var(--muted);
-    margin-top: 14px;
-    border-left: 2px solid #ececec;
-    padding: 4px 0 4px 12px;
-  }
-  .tools strong { color: var(--ink); font-weight: 600; }
-
-  pre {
-    background: var(--code-bg);
-    color: var(--code-ink);
-    border-radius: 8px;
-    padding: 14px 18px;
-    overflow-x: auto;
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-    font-size: 12.5px;
-    line-height: 1.65;
-    margin: 14px 0;
-    white-space: pre;
+    line-height: 1.45;
   }
 
-  /* Script — visible inline, not collapsed */
-  .script-body {
+  /* Script callout */
+  details.script {
     background: var(--soft-2);
+    border: 1px solid #ececec;
     border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-    padding: 20px 24px;
-    margin: 16px 0 0;
-    font-size: 15px;
-    line-height: 1.7;
+    border-radius: 6px;
+    padding: 14px 22px;
+    margin: 12px 0 0;
   }
-  .script-body p { margin: 0 0 12px; }
-  .script-body p:last-child { margin-bottom: 0; }
-  .script-body .cue {
-    color: var(--softer);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    display: block;
-    margin: 16px 0 4px;
+  details.script summary {
+    cursor: pointer;
     font-weight: 600;
+    color: var(--ink);
+    font-size: 14px;
+    list-style: none;
+    padding: 4px 0;
   }
-  .script-body .cue:first-child { margin-top: 0; }
+  details.script summary::-webkit-details-marker { display: none; }
+  details.script summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 8px;
+    color: var(--accent-deep);
+    transition: transform 120ms;
+  }
+  details.script[open] summary::before { transform: rotate(90deg); }
+  details.script .body { padding: 12px 0 4px; font-size: 14px; line-height: 1.7; }
+  details.script .body p { margin: 0 0 12px; }
+  details.script .body p:last-child { margin-bottom: 0; }
+  details.script .body em { color: var(--softer); font-style: normal; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 14px; margin-bottom: 2px; }
 
   .links {
-    margin-top: 14px;
+    margin-top: 20px;
     font-size: 14px;
     display: flex;
     gap: 16px;
@@ -276,6 +284,11 @@
 <main>
   <p class="day-tag">Day 01 · April 29, 2026</p>
   <h1>Training AI to be my video editor</h1>
+  <span class="meta-flex">written · edited · captioned · published — by AI</span>
+  <p class="hook">"I got outplayed on my own video."</p>
+  <p class="lead">
+    My video on X got nearly a million views. Someone reposted it to Instagram, gave away my demo link, and got more comments than my original got likes. So instead of becoming a better editor, I'm spending 30 days teaching an AI to be one for me.
+  </p>
 
   <div class="tldr">
     <h2>You don't need to read this</h2>
@@ -287,11 +300,6 @@
     </div>
   </div>
 
-  <p class="hook">"I got outplayed on my own video."</p>
-  <p class="lead">
-    My video on X got nearly a million views. Someone reposted it to Instagram, gave away my demo link, and got more comments than my original got likes. So instead of becoming a better editor, I'm spending 30 days teaching an AI to be one for me.
-  </p>
-
   <div class="video-wrap">
     <video controls playsinline preload="metadata" poster="/cdn/day_01/cover.jpg">
       <source src="/cdn/day_01/final.mp4" type="video/mp4">
@@ -299,138 +307,69 @@
     </video>
   </div>
 
-  <h2>How to set this up yourself</h2>
-  <p class="section-intro">Ten steps. Each one is a small, single-purpose script that Claude orchestrates. Every tool listed runs on your laptop or hits an API — no proprietary editor, no subscription beyond Claude Code itself.</p>
-
-  <div class="step">
-    <div class="num">Step 0</div>
-    <h3>Plan the series with Claude before you record anything</h3>
-    <p>The biggest mistake people make starting a daily series is recording first and figuring out the arc later. The arc is the hard part. So I opened Claude Code and asked it to design the whole 30-day series upfront — the through-line, what each day delivers, who the audience is, what makes a viewer come back tomorrow. That conversation became <code>series/SERIES_PLAN.md</code>, a single source of truth the rest of the pipeline reads from.</p>
-    <p>The plugin above packages that planning prompt. Install it, tell Claude what your show is about, and you'll get the same kind of plan tailored to your topic. Edit it freely — it's a markdown file, not a sealed document.</p>
-    <div class="tools"><strong>Tools:</strong> Claude Code · the <code>day-01-series-planner</code> plugin</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 1</div>
-    <h3>Record on your phone — the only manual step</h3>
-    <p>Phone in selfie mode, talk for 60–90 seconds. Shoot b-roll separately: your screen, your hands, anything visual that supports the talk track. Save everything into <code>raw/day_NN/</code>. No tripod, no teleprompter — the AI handles the structure later, and the looser the take, the more natural the final cut feels.</p>
-    <div class="tools"><strong>Tools:</strong> your phone</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 2</div>
-    <h3>Transcribe locally with faster-whisper</h3>
-    <p>Whisper turns audio into text with <em>word-level timestamps</em>. Word-level matters because every later step — cuts, captions, b-roll sync — keys off when each word was spoken, not just which sentence it was in.</p>
-    <p>Run it locally rather than via API. No upload, no key, ~30 seconds for a 90-second clip on an M-series Mac.</p>
-    <pre><span class="prompt">$ </span>python pipeline/transcribe.py raw/day_01/selfie_part_a.MOV
-<span class="prompt"># →</span> transcripts/day_01/selfie_part_a.json
-<span class="prompt">#    </span>{ words: [{word, start, end}, ...] }</pre>
-    <div class="tools"><strong>Tools:</strong> faster-whisper (Python, runs locally on CPU/GPU)</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 3</div>
-    <h3>Tighten with a JSON config — Claude proposes the cuts</h3>
-    <p>Cuts are described in JSON, not edited on a timeline. Claude reads the transcript, proposes cuts (dead air, "uhh"s, false starts, retakes), and writes them as keep-ranges. ffmpeg executes.</p>
-    <pre>{
-  "input": "raw/day_01/selfie_part_a.MOV",
-  "keep": [
-    [0.5, 4.2],
-    [5.1, 12.8],
-    [13.4, 21.0]
-  ]
-}</pre>
-    <p>Editing this way means revisions are diffs, not click-and-drag. If a cut feels wrong, you change a number. If you want a different take of a phrase, you swap the range. Claude handles the iteration — you watch and react.</p>
-    <div class="tools"><strong>Tools:</strong> Claude (proposes the cuts) · ffmpeg (executes them)</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 4</div>
-    <h3>Assemble: selfie audio is the spine, b-roll swaps the visual</h3>
-    <p>The selfie audio plays as one continuous track. B-roll clips swap the <em>visual</em> at scripted moments — the audio underneath never breaks. This is what makes short-form video feel produced rather than lecture-y: the rhythm of your voice drives the visual cadence.</p>
-    <p>The script is annotated with cues that Claude inserts based on whatever raw clips exist:</p>
-    <pre>[Selfie] Day 1 of training AI to be my video editor.
-[B-roll: the IG repost] Someone reposted it to Instagram...
-[Selfie] I got outplayed on my own work.</pre>
-    <p>Each <code>[B-roll: ...]</code> marker is a window where the visual cuts away while the selfie audio keeps playing. ffmpeg's overlay filter does the heavy lifting; Claude picks the timing.</p>
-    <div class="tools"><strong>Tools:</strong> Claude (annotates the script) · ffmpeg (concat + overlay)</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 5</div>
-    <h3>Caption with ASS subtitles, burned into the pixels</h3>
-    <p>Captions are baked into the video itself, not added as a platform overlay. That way they look identical on Instagram, TikTok, and any embed — and you get full control over font, color, and timing.</p>
-    <p>The format is ASS (Advanced SubStation Alpha), the only common subtitle format that supports per-word styling. The pipeline reads word timestamps from the transcript and groups them into 1–3 word chunks. Multi-word phrases like <code>AI agent</code>, <code>Claude plugin</code>, and <code>30 days</code> stay together as a single chunk so they don't get split across reads. Keywords get emphasis — a salmon color (<code>#FFA395</code>) and ~15% larger size — and the result is an <code>.ass</code> file that ffmpeg burns into the video.</p>
-    <p>Two details that took iterations to get right. First, emphasis color: red and yellow both clashed against warm skin tones, so the keyword color landed on a soft salmon — pink-leaning, on-brand, and easy on the eye for larger text. Second, text replacements (<code>DAY ONE → DAY 1</code>, <code>RECORDED → RECORDING</code>) catch words Whisper transcribes one way that need to display another — useful when your CTA keyword has to match exactly for the comment-funnel to fire.</p>
-    <div class="tools"><strong>Tools:</strong> custom Python (<code>pipeline/caption.py</code>) · ffmpeg <code>subtitles</code> filter</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 6</div>
-    <h3>Polish audio and color in one ffmpeg pass</h3>
-    <p>Audio chain — four filters in series:</p>
-    <pre>highpass=f=80         <span class="prompt"># remove low-end rumble</span>
-afftdn                <span class="prompt"># spectral denoise</span>
-acompressor=...       <span class="prompt"># even out levels</span>
-loudnorm=I=-14:LRA=11 <span class="prompt"># IG/TikTok loudness target</span></pre>
-    <p>Color: small contrast bump (1.04), light saturation (1.07), neutral-warm temperature (~6300K). Anything more and the video starts looking filtered, which on a personal-vlog format reads as inauthentic.</p>
-    <p>Speed: 1.08× at the very end. Captions are baked in <em>before</em> the speedup, so they speed up naturally with the audio — no resync needed and no timing drift.</p>
-    <div class="tools"><strong>Tools:</strong> ffmpeg (<code>loudnorm</code>, <code>eq</code>, <code>colortemperature</code>, <code>atempo</code>)</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 7</div>
-    <h3>Publish to IG and TikTok with one API call</h3>
-    <p>I use <a href="https://postforme.dev">Post for Me</a> — one POST request and the video is queued for both Instagram Reels and TikTok at the same time. Claude writes the caption from the script, picks hashtags from a pre-approved list, and the API handles the upload.</p>
-    <p>The API key lives in macOS Keychain, never in a <code>.env</code> file that could get committed:</p>
-    <pre>api_key = subprocess.check_output([
-    "security", "find-generic-password",
-    "-s", "POSTFORME_API_KEY", "-w"
-]).decode().strip()</pre>
-    <p>The publish config is per-day JSON — caption, hashtags, platforms, the path to the final mp4. Same shape every day, only the content changes.</p>
-    <div class="tools"><strong>Tools:</strong> Post for Me API · macOS Keychain · Claude (writes the caption)</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 8</div>
-    <h3>Funnel comments to DMs with ManyChat</h3>
-    <p>The CTA at the end of every video asks viewers to comment a keyword (for Day 1, that's <code>DAY 1</code>). ManyChat watches the post, catches the keyword, and DMs the link to this guide page automatically. No manual DMing — and the comments themselves become social proof on the post, which boosts reach.</p>
-    <div class="tools"><strong>Tools:</strong> ManyChat (Instagram automation)</div>
-  </div>
-
-  <div class="step">
-    <div class="num">Step 9</div>
-    <h3>Ship the guide page on Vercel</h3>
-    <p>This page is a single HTML file in a public GitHub repo. Vercel watches the repo; every push to <code>main</code> redeploys in about ten seconds. No build step, no framework, no JavaScript framework tax — just CSS variables and one tiny script for the copy button.</p>
-    <p>If you're starting from scratch: connect Vercel to your GitHub repo, set <code>web/</code> as the output directory, and you're done. The whole config is six lines of <code>vercel.json</code>.</p>
-    <div class="tools"><strong>Tools:</strong> GitHub · Vercel (static hosting)</div>
+  <h2>How the video was made</h2>
+  <p>Six small Python scripts ran in sequence. Each one does ONE thing. All open-source.</p>
+  <div class="ribbon">
+    <div class="ribbon-step">
+      <div class="num">01</div>
+      <div class="name">Transcribe</div>
+      <div class="desc">Whisper turns the audio into word-by-word timestamps.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">02</div>
+      <div class="name">Tighten</div>
+      <div class="desc">Cuts dead air, long pauses, retakes. JSON config, ffmpeg executes.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">03</div>
+      <div class="name">Assemble</div>
+      <div class="desc">Selfie audio is the spine. B-roll clips swap in for the visual at scripted moments.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">04</div>
+      <div class="name">Caption</div>
+      <div class="desc">Word timestamps → ASS subtitles → burned in. Multi-word phrases stay atomic.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">05</div>
+      <div class="name">Polish</div>
+      <div class="desc">Audio normalize to −14 LUFS, light color grade, 1.08× pace. One ffmpeg pass.</div>
+    </div>
+    <div class="ribbon-step">
+      <div class="num">06</div>
+      <div class="name">Publish</div>
+      <div class="desc">One API call → IG Reel + TikTok in 30 seconds. No manual upload.</div>
+    </div>
   </div>
 
   <h2>The script</h2>
-  <p class="section-intro">About 50 seconds, 142 words. Same structure the plugin will help you build for your own series — hook, payoff, challenge, CTA.</p>
-  <div class="script-body">
-    <span class="cue">Selfie</span>
-    <p>Day 1 of training AI to be my video editor.</p>
-    <p>My video on X got nearly a million views.</p>
-    <span class="cue">B-roll: the IG repost</span>
-    <p>Someone reposted it to Instagram, gave away my demo link, and got nearly two thousand comments.</p>
-    <span class="cue">Selfie</span>
-    <p>I got outplayed on my own work. But it got me to think — I can do that. I'm not gonna become an editor. I can teach an AI to be one for me.</p>
-    <p>So here's the challenge: 30 days. Every edit through an AI agent. Every post through an AI agent. Just my phone and a laptop.</p>
-    <span class="cue">B-roll: Claude planning the series</span>
-    <p>Step one wasn't even recording. It was opening Claude. I asked it to plan the whole 30 days, beginning to end.</p>
-    <span class="cue">B-roll: writing / editing / publishing</span>
-    <p>Write. Edit. Publish. Every day.</p>
-    <span class="cue">Selfie</span>
-    <p>I'm packaging everything into a free guide and a Claude plugin. Follow and comment <strong>'DAY 1'</strong> for the link.</p>
-  </div>
+  <p>About 50 seconds, 142 words. Same script the plugin will help you write.</p>
+  <details class="script">
+    <summary>Read the full spoken script</summary>
+    <div class="body">
+      <em>Selfie</em>
+      <p>Day 1 of training AI to be my video editor.</p>
+      <p>My video on X got nearly a million views.</p>
+      <em>B-roll: the IG repost</em>
+      <p>Someone reposted it to Instagram, gave away my demo link, and got nearly two thousand comments.</p>
+      <em>Selfie</em>
+      <p>I got outplayed on my own work. But it got me to think — I can do that. I'm not gonna become an editor. I can teach an AI to be one for me.</p>
+      <p>So here's the challenge: 30 days. Every edit through an AI agent. Every post through an AI agent. Just my phone and a laptop.</p>
+      <em>B-roll: Claude planning the series</em>
+      <p>Step one wasn't even recording. It was opening Claude. I asked it to plan the whole 30 days, beginning to end.</p>
+      <em>B-roll: writing / editing / publishing</em>
+      <p>Write. Edit. Publish. Every day.</p>
+      <em>Selfie</em>
+      <p>I'm packaging everything into a free guide and a Claude plugin. Follow and comment <strong>'DAY 1'</strong> for the link.</p>
+    </div>
+  </details>
 
   <h2>The source</h2>
-  <p class="section-intro">Browse, fork, or run any of it locally:</p>
+  <p>Browse, fork, or run any of it locally:</p>
   <div class="links">
     <a href="https://github.com/andrewjiang/andrewislearning">github repo</a>
     <a href="https://github.com/andrewjiang/andrewislearning/tree/main/plugins/day-01-series-planner">plugin source</a>
-    <a href="https://github.com/andrewjiang/andrewislearning/tree/main/pipeline">all pipeline scripts</a>
+    <a href="https://github.com/andrewjiang/andrewislearning/tree/main/pipeline">all 6 pipeline scripts</a>
     <a href="https://github.com/andrewjiang/andrewislearning/blob/main/series/SERIES_PLAN.md">the 30-day plan</a>
   </div>
 

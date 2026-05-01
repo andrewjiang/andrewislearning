@@ -29,6 +29,7 @@ The script will:
 Config shape (series/days/NN-publish.json):
 {
   "video":     "edits/day_NN/final.mp4",
+  "cover":     ".context/reel_cover_custom/cover_13s_outplayed.png", // optional
   "caption":   "Day N of...",
   "platforms": ["instagram", "tiktok"],          // optional; default both
   "output":    "published/day_NN/receipt.json",
@@ -123,7 +124,7 @@ def auth_url(token: str, platform: str) -> str:
     return out.get("url", "")
 
 
-def upload_video(token: str, video_path: Path) -> str:
+def upload_media(token: str, media_path: Path, content_type: str) -> str:
     """Use Post for Me's create-upload-url flow. Returns the public media_url."""
     sys.stderr.write(f"[publish] requesting upload URL...\n")
     init = curl_json([
@@ -135,13 +136,13 @@ def upload_video(token: str, video_path: Path) -> str:
     if not upload_url or not media_url:
         die(f"create-upload-url missing fields: {init}")
 
-    size_mb = video_path.stat().st_size / 1024 / 1024
-    sys.stderr.write(f"[publish] PUT {video_path.name} ({size_mb:.1f} MB)...\n")
+    size_mb = media_path.stat().st_size / 1024 / 1024
+    sys.stderr.write(f"[publish] PUT {media_path.name} ({size_mb:.1f} MB)...\n")
     proc = subprocess.run(
         [
             "curl", "-s", "-S", "-X", "PUT", upload_url,
-            "--data-binary", f"@{video_path}",
-            "-H", "Content-Type: video/mp4",
+            "--data-binary", f"@{media_path}",
+            "-H", f"Content-Type: {content_type}",
         ],
         check=False, capture_output=True, text=True,
     )
@@ -151,12 +152,26 @@ def upload_video(token: str, video_path: Path) -> str:
     return media_url
 
 
+def upload_video(token: str, video_path: Path) -> str:
+    return upload_media(token, video_path, "video/mp4")
+
+
+def upload_cover(token: str, cover_path: Path) -> str:
+    suffix = cover_path.suffix.lower()
+    content_type = "image/jpeg" if suffix in {".jpg", ".jpeg"} else "image/png"
+    return upload_media(token, cover_path, content_type)
+
+
 def publish_post(token: str, caption: str, account_ids: list[str],
-                 media_url: str, platform_configs: Optional[dict] = None) -> str:
+                 media_url: str, platform_configs: Optional[dict] = None,
+                 thumbnail_url: Optional[str] = None) -> str:
+    media: dict = {"url": media_url}
+    if thumbnail_url:
+        media["thumbnail_url"] = thumbnail_url
     body: dict = {
         "caption": caption,
         "social_accounts": account_ids,
-        "media": [{"url": media_url}],
+        "media": [media],
     }
     if platform_configs:
         body["platform_configurations"] = platform_configs
@@ -181,7 +196,8 @@ def poll_results(token: str, post_id: str, timeout: int = 60) -> list[dict]:
             f"{API}/v1/social-post-results?social_post_id={post_id}",
             "-H", f"Authorization: Bearer {token}",
         ])
-        last = out.get("data", [])
+        rows = out.get("data", [])
+        last = [r for r in rows if r.get("post_id") == post_id]
         # Done when no platform is still 'pending' or 'processing'.
         if last and all(
             r.get("status", "").lower() not in {"pending", "processing", "queued"}
@@ -190,6 +206,20 @@ def poll_results(token: str, post_id: str, timeout: int = 60) -> list[dict]:
             return last
         time.sleep(3)
     return last
+
+
+def sanitize_for_receipt(value):
+    if isinstance(value, dict):
+        sanitized = {}
+        for key, item in value.items():
+            if key in {"access_token", "refresh_token"}:
+                sanitized[key] = "[redacted]"
+            else:
+                sanitized[key] = sanitize_for_receipt(item)
+        return sanitized
+    if isinstance(value, list):
+        return [sanitize_for_receipt(item) for item in value]
+    return value
 
 
 def main() -> int:
@@ -207,6 +237,7 @@ def main() -> int:
         return path if path.is_absolute() else (REPO / path)
 
     video = resolve(cfg["video"])
+    cover = resolve(cfg["cover"]) if cfg.get("cover") else None
     caption = cfg["caption"]
     platforms = cfg.get("platforms", ["instagram", "tiktok"])
     output_path = resolve(cfg["output"])
@@ -214,6 +245,8 @@ def main() -> int:
 
     if not video.exists():
         die(f"video not found: {video}")
+    if cover and not cover.exists():
+        die(f"cover not found: {cover}")
 
     token = get_token()
 
@@ -245,19 +278,22 @@ def main() -> int:
         die("connect missing platforms first; re-run when done")
 
     media_url = upload_video(token, video)
+    thumbnail_url = upload_cover(token, cover) if cover else None
 
     sys.stderr.write(f"[publish] publishing to {', '.join(platforms)}...\n")
-    post_id = publish_post(token, caption, sa_ids, media_url, platform_configs)
+    post_id = publish_post(token, caption, sa_ids, media_url, platform_configs, thumbnail_url)
     sys.stderr.write(f"[publish] post_id: {post_id}\n")
 
-    results = poll_results(token, post_id, timeout=90)
+    results = sanitize_for_receipt(poll_results(token, post_id, timeout=90))
     receipt = {
         "post_id": post_id,
         "video": str(video.relative_to(REPO)) if video.is_relative_to(REPO) else str(video),
         "caption": caption,
+        "cover": str(cover.relative_to(REPO)) if cover and cover.is_relative_to(REPO) else str(cover) if cover else None,
         "platforms": platforms,
         "platform_configurations": platform_configs,
         "media_url": media_url,
+        "thumbnail_url": thumbnail_url,
         "results": results,
         "published_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
     }
@@ -267,9 +303,18 @@ def main() -> int:
     rel = output_path.relative_to(REPO) if output_path.is_relative_to(REPO) else output_path
     sys.stderr.write(f"[publish] wrote receipt → {rel}\n")
     for r in results:
-        plat = r.get("platform", "?")
-        status = r.get("status", "?")
-        link = r.get("permalink") or r.get("link") or ""
+        account = next(
+            (a for a in accounts if a.get("id") == r.get("social_account_id")),
+            {},
+        )
+        plat = account.get("platform", "?")
+        status = "published" if r.get("success") else r.get("status", "?")
+        link = (
+            r.get("permalink") or
+            r.get("link") or
+            r.get("platform_data", {}).get("url") or
+            ""
+        )
         sys.stderr.write(f"[publish]   {plat}: {status}  {link}\n")
     return 0
 
